@@ -8,7 +8,7 @@ const RestaurantInfo = () => {
     });
     return (
         <div>
-            <h1>eMenu</h1>
+            {/* <h1>eMenu</h1> */}
             <p>RestaurantInfo for eMenu</p>
         </div>
     );

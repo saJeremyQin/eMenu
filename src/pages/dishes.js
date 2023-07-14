@@ -8,7 +8,7 @@ const Dishes = () => {
     });
     return (
         <div>
-            <h1>eMenu</h1>
+            {/* <h1>eMenu</h1> */}
             <p>Dishes for eMenu</p>
         </div>
     );

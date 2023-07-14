@@ -7,16 +7,19 @@ import Dishes from "./dishes";
 import ToVerify from "./toVerify";
 import AppUsers from "./appUser";
 import RestaurantInfo from "./restaurantInfo";
+import Layout from "../components/Layout";
 
 const Pages = () => {
     return (
         <Router>
-            <Route exact path="/" component={Home}/>
-            <Route path="/toverify" component={ToVerify} />
-            <Route path="/dishTypes" component={DishTypes} />
-            <Route path="/dishes" component={Dishes}/>
-            <Route path="/appUser" component={AppUsers}/>
-            <Route path="/restaurantInfo" component={RestaurantInfo}/>
+            <Layout>
+                <Route exact path="/" component={Home}/>
+                <Route path="/toverify" component={ToVerify} />
+                <Route path="/dishTypes" component={DishTypes} />
+                <Route path="/dishes" component={Dishes}/>
+                <Route path="/appUser" component={AppUsers}/>
+                <Route path="/restaurantInfo" component={RestaurantInfo}/>
+            </Layout>
         </Router>
 
     );
