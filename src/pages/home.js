@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-
+import { makeStyles } from "@material-ui/core";
 // Define custom styles using JSS
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -29,7 +28,7 @@ const Home = () => {
         <div>
             {/* <Header />
             <Navigation /> */}
-            <h1>This is h1</h1>
+            {/* <h1>This is h1</h1> */}
             <p>This is the home page</p>
             <Button className={styles.button}>
                 Click me!
