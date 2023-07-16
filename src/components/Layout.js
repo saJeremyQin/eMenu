@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
-        borderTop:'1px solid red',
+        // borderTop:'1px solid red',
         [theme.breakpoints.up("md")]:{
             display: "flex",
             top: 64,
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "1em",
         overflowY: "scroll",
         borderLeft:'1px solid pink',
-        borderTop:'1px solid blue',
+        // borderTop:'1px solid blue',
         [theme.breakpoints.up("md")]: {
             flex: 1,
             marginLeft: 220,

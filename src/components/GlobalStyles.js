@@ -34,7 +34,7 @@ const useStyles = makeStyles(() =>
         }
       },
       h1:{
-        color: 'red',
+        color: '#e9983e',
       }
     }
   })
