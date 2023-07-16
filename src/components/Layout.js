@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
         // borderTop:'1px solid blue',
         [theme.breakpoints.up("md")]: {
             flex: 1,
-            marginLeft: 220,
+            marginLeft: 230,
             height: `calc(100% - 64px)`,
-            width: `calc(100% - 220px)`
+            width: `calc(100% - 230px)`
         }   
     },
 }));

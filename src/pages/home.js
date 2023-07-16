@@ -28,7 +28,6 @@ const Home = () => {
         <div>
             {/* <Header />
             <Navigation /> */}
-            {/* <h1>This is h1</h1> */}
             <p>This is the home page</p>
             <Button className={styles.button}>
                 Click me!
