@@ -1,5 +1,4 @@
 // 1. GlobalStyles.js
-// import { makeStyles } from '@material-ui/core';
 import { makeStyles, createStyles } from "@material-ui/core";
 const useStyles = makeStyles(() =>
   createStyles({
