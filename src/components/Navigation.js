@@ -55,7 +55,7 @@ const Navigation = () => {
             <ListItemIcon>
                 <FastfoodIcon />
             </ListItemIcon>
-            <ListItemText primary="Dish Opert." />
+            <ListItemText primary="Dish Opt." />
             {dishManagementOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={dishManagementOpen} timeout="auto" unmountOnExit>
@@ -83,7 +83,7 @@ const Navigation = () => {
             <ListItemIcon>
                 <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="appUsers" />
+            <ListItemText primary="AppUsers" />
             </ListItem>
         </List>
         </nav>
