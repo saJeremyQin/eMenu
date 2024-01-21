@@ -31,13 +31,16 @@ app.get('/api/dishtypes', async (req, res) => {
     }
 })
 
-app.get('/api/dishes/:dishtypeId', async (req, res) => {
+app.get('/api/dishes/:fbUserId/:dishtypeId', async (req, res) => {
+    const fbUserId = req.params.fbUserId;
     const dishtypeId = req.params.dishtypeId;
     try {
         const response = await client.getEntries({
             content_type:'dish',
-            'fields.dishType.sys.id': dishtypeId,       //works, use fieldid instead of display name
-            // links_to_entry: dishtypeId,
+            'fields.creator.sys.contentType.sys.id':'user',
+            'fields.dishType.sys.contentType.sys.id':'dishType',
+            'fields.creator.fields.fbUserId[match]': fbUserId,
+            'fields.dishType.sys.id':dishtypeId,
         });
         const dishes = response.items.map(item => (
             {
