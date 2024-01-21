@@ -36,8 +36,8 @@ app.get('/api/dishes/:dishtypeId', async (req, res) => {
     try {
         const response = await client.getEntries({
             content_type:'dish',
-            // 'fields.type.sys.id': dishtypeId,
-            links_to_entry: dishtypeId,
+            'fields.dishType.sys.id': dishtypeId,       //works, use fieldid instead of display name
+            // links_to_entry: dishtypeId,
         });
         const dishes = response.items.map(item => (
             {
