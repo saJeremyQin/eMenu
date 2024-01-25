@@ -10,6 +10,9 @@ const client = createClient({
     accessToken: 'zu0M1zS19jfMeAroc1tARgWxD03jd8tWdG5nBtUJt9U',
 })
 
+app.get('/hello', (req, res) => {
+    res.send('Hello World');
+})
 
 app.get('/api/dishtypes', async (req, res) => {
     try {
