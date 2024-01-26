@@ -1,11 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router";
+import PageLogin from '../pages/PageLogin.vue';
 import PageHome from '../pages/PageHome.vue';
 import PageNotFound from '../pages/PageNotFound.vue';
 import LayoutStandard from '../layout/LayoutStandard.vue';
+import LayoutLogin from '../layout/LayoutLogin.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    meta: {
+      layout: LayoutLogin,
+      requiresAuth: true
+    },
+    components: {
+      default: PageLogin
+    },
+  },
+  {
+    path: '/home',
     name: 'Home',
     meta: {
       layout: LayoutStandard,
