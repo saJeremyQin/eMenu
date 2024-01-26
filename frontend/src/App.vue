@@ -1,8 +1,7 @@
 <template>
-  <h2>Hello, Vue</h2>
-  <div>
+  <component :is="$route.meta.layout || 'div'">
     <router-view />
-  </div>
+  </component>
 </template>
 
 <script>
