@@ -62,8 +62,9 @@ export default {
 	}
 }
 </script>
+<style lang="scss" scoped>
+@use "@/styles/base" as *;
 
-<style scoped>
 .forms {
 	display: flex;
 	min-height: 100vh;
@@ -75,7 +76,8 @@ form {
 }
 
 form.register {
-	color: #FFF;
+	// color: #FFF;
+	color: $colour-blue;
 	background-color: rgb(245, 66, 101);
 	background-image: linear-gradient(
 		to bottom right,
@@ -87,7 +89,7 @@ form.register {
 h2 {
 	font-size: 2rem;
 	text-transform: uppercase;
-  text-align: center;
+	text-align: center;
 	margin-bottom: 2rem;
 }
 
