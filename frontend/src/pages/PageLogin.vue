@@ -16,11 +16,7 @@
 						type="email"
 						class="form-input"
 						label="Email address"
-					>
-						<!-- <template #label>
-							<span class="label-text">Email address</span>
-						</template> -->
-					</v-text-field>
+					></v-text-field>
 					<v-text-field 
 						v-model="password"
 						:rules="rules"
@@ -28,15 +24,23 @@
 						type="password"
 						label="password"
 						class="form-input"
-					>
-						<!-- <template #label>
-							<span class="label-text">Password</span>
-						</template> -->
-					</v-text-field>
+					></v-text-field>
+					<v-text-field
+						v-if="!isLoginForm"	
+						:rules="rules"
+						color="#e9983e"
+						type="password"
+						label="retype password"
+						class="form-input"
+					></v-text-field>
 					<v-btn type="submit" block class="mt-2 submit-btn">
-						Submit
+						{{isLoginForm ? 'Login' : 'Register'}}
 					</v-btn>
+					<div class="link-wrapper">
+						<a href="#" class="toggle-link" @click="toggleForm">{{ isLoginForm ? 'To Register' : 'To Login'}}</a>
+					</div>
 				</v-form>
+		
 			</v-col>
 		</v-row>
 	</v-container>
@@ -45,6 +49,11 @@
 <script setup>
 import iconImg from '@/assets/icon.png';
 import titleImg from '@/assets/title.png';
+import { ref } from 'vue';
+const isLoginForm = ref(false);
+const toggleForm = () => {
+	isLoginForm.value = !isLoginForm.value;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -79,19 +88,6 @@ import titleImg from '@/assets/title.png';
 	:deep(.v-label) {
 		color: white;
 	}
-
-	// :deep(.v-input__control) {
-	// 	border: none; // Remove the original border
-	// 	box-shadow: 0 1px 0 0 #fafafa; // Set initial box-shadow color to white
-	// }
-
-	// :deep(.v-input__control):hover {
-	// 	box-shadow: 0 1px 0 0 #fff; // Change box-shadow color on hover
-	// }
-
-	// :deep(.v-input__control):focus-within {
-	// 	box-shadow: 0 2px 0 0 #e9983e; // Set box-shadow color on focus
-	// }
 }
 
 .submit-btn {
@@ -112,5 +108,19 @@ import titleImg from '@/assets/title.png';
 	line-height: 24px;
 	word-wrap: break-word;
 }
-
+.link-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 8px;
+}
+.toggle-link {
+  display: inline-block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: white; /* Link color */
+  transition: background-color 0.3s ease; /* Optional: Add a smooth hover effect */
+}
+.toggle-link:hover {
+  color: #c77952; /* Hover text color */
+}
 </style>
