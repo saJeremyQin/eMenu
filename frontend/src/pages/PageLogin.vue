@@ -2,11 +2,12 @@
 	<v-container fluid="true">
 		<v-row>
 			<v-col>
-				<v-img :src="logoPic" class="logo-img"></v-img>
+				<v-img :src="iconImg" class="icon-img"></v-img>
 			</v-col>
 		</v-row>
 		<v-row>
 			<v-col class="form-col">
+				<v-img :src="titleImg" class="title-img"></v-img>
 				<v-form @submit.prevent class="form">
 					<v-text-field
 						v-model="email"
@@ -42,26 +43,35 @@
 </template>
 
 <script setup>
-import logoPic from '@/assets/icon.png';
+import iconImg from '@/assets/icon.png';
+import titleImg from '@/assets/title.png';
 </script>
 
 <style lang="scss" scoped>
 
-.logo-img {
+.icon-img {
 	width: 64px;
 	height: 64px;
 	margin-left: 32px;
 }
 
+.title-img {
+	width: 240px;
+	height: 182px;
+}
+
 .form-col {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	// align-items: flex-start;
+	align-items: center;
 	position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
 .form {
 	width: 400px;
 	height: 320px;
