@@ -11,23 +11,26 @@
 					<v-text-field
 						v-model="email"
 						:rules="rules"
+						color="#e9983e"
 						type="email"
 						class="form-input"
+						label="Email address"
 					>
-						<template #label>
+						<!-- <template #label>
 							<span class="label-text">Email address</span>
-						</template>
+						</template> -->
 					</v-text-field>
 					<v-text-field 
 						v-model="password"
 						:rules="rules"
+						color="#e9983e"
 						type="password"
 						label="password"
 						class="form-input"
 					>
-						<template #label>
+						<!-- <template #label>
 							<span class="label-text">Password</span>
-						</template>
+						</template> -->
 					</v-text-field>
 					<v-btn type="submit" block class="mt-2 submit-btn">
 						Submit
@@ -63,23 +66,22 @@ import logoPic from '@/assets/icon.png';
 	width: 400px;
 	height: 320px;
 
-	.label-text {
-		color:white;
+	:deep(.v-label) {
+		color: white;
 	}
 
-	:deep(.v-input__control)::before {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 2px;
-		border-bottom-color: #c77952;
-	}
+	// :deep(.v-input__control) {
+	// 	border: none; // Remove the original border
+	// 	box-shadow: 0 1px 0 0 #fafafa; // Set initial box-shadow color to white
+	// }
 
-	:deep(.v-input__control):focus-within::before {
-		border-bottom-color: #e9983e;
-	}
+	// :deep(.v-input__control):hover {
+	// 	box-shadow: 0 1px 0 0 #fff; // Change box-shadow color on hover
+	// }
+
+	// :deep(.v-input__control):focus-within {
+	// 	box-shadow: 0 2px 0 0 #e9983e; // Set box-shadow color on focus
+	// }
 }
 
 .submit-btn {

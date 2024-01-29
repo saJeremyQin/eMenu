@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PageLogin from '../pages/PageLogin.vue';
 import PageHome from '../pages/PageHome.vue';
-// import PageAbout from '../pages/PageAbout.vue';
+import PageAbout from '../pages/PageAbout.vue';
 import PageNotFound from '../pages/PageNotFound.vue';
 import LayoutStandard from '../layout/LayoutStandard.vue';
 import LayoutLogin from '../layout/LayoutLogin.vue';
@@ -36,7 +36,9 @@ const routes = [
       layout: LayoutStandard,
       requiresAuth: true
     },
-    components: () => import('../pages/PageAbout.vue'),
+    components: {
+      default: PageAbout
+    },
   },
   
   { path: '/:pathMatch(.*)*', component: PageNotFound },
