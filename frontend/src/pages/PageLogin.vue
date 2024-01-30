@@ -11,7 +11,7 @@
 				<v-form @submit.prevent class="form">
 					<v-text-field
 						v-model="email"
-						:rules="rules"
+						:rules="emailRules"
 						color="#e9983e"
 						type="email"
 						class="form-input"
@@ -19,7 +19,7 @@
 					></v-text-field>
 					<v-text-field 
 						v-model="password"
-						:rules="rules"
+						:rules="passwordRules"
 						color="#e9983e"
 						type="password"
 						label="password"
@@ -27,7 +27,7 @@
 					></v-text-field>
 					<v-text-field
 						v-if="!isLoginForm"	
-						:rules="rules"
+						:rules="retypePasswordRules"
 						color="#e9983e"
 						type="password"
 						label="retype password"
@@ -40,7 +40,6 @@
 						<a href="#" class="toggle-link" @click="toggleForm">{{ isLoginForm ? 'To Register' : 'To Login'}}</a>
 					</div>
 				</v-form>
-		
 			</v-col>
 		</v-row>
 	</v-container>
@@ -50,10 +49,48 @@
 import iconImg from '@/assets/icon.png';
 import titleImg from '@/assets/title.png';
 import { ref } from 'vue';
-const isLoginForm = ref(false);
+const isLoginForm = ref(true);
+const email = ref();
+const password = ref();
+// const retypePassword = ref();
+
 const toggleForm = () => {
 	isLoginForm.value = !isLoginForm.value;
 }
+
+const emailRules = [
+	(value) => { 
+		if(value) return true
+		return 'Email is required'
+	},
+	(value) => {
+		if(/.+@.+\..+/.test(value)) return true
+		return 'Email must be valid'
+	}
+];
+
+const passwordRules = [
+	(value) => {
+		if(value) return true
+		return 'Password is required'
+	},
+	(value) => {
+		if(value.length >= 6) return true
+		return 'Password must be at least 6 characters'
+	}
+];
+
+const retypePasswordRules = [
+	(value) => {
+		if(value) return true
+		return 'Password is required'
+	},
+	(value) => {
+		if(value === password.value) return true
+		return 'Passwords do not match'
+	}
+]
+
 </script>
 
 <style lang="scss" scoped>
@@ -86,8 +123,13 @@ const toggleForm = () => {
 	height: 320px;
 
 	:deep(.v-label) {
-		color: white;
+		color: #c77952 ;
 	}
+	:deep(.v-messages) {
+		color: rgb(72, 72, 72) !important;
+	}
+
+	color: #e9983e;
 }
 
 .submit-btn {
@@ -101,7 +143,7 @@ const toggleForm = () => {
 	align-items: center;
 	background: linear-gradient(136deg, #e9983e 0%, #c77952 100%);
 	text-align: center;
-	color: white;
+	color: rgb(72, 72, 72);
 	font-size: 16px;
 	font-family: 'SF Pro Display', sans-serif;
 	font-weight: 500;
@@ -117,7 +159,7 @@ const toggleForm = () => {
   display: inline-block;
   padding: 8px 16px;
   text-decoration: none;
-  color: white; /* Link color */
+  color: rgb(72, 72, 72);
   transition: background-color 0.3s ease; /* Optional: Add a smooth hover effect */
 }
 .toggle-link:hover {
