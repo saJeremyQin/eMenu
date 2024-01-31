@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid="true">
+	<v-container fluid>
 		<v-row>
 			<v-col>
 				<v-img :src="iconImg" class="icon-img"></v-img>
@@ -10,7 +10,7 @@
 				<v-img :src="titleImg" class="title-img"></v-img>
 				<v-form @submit.prevent class="form">
 					<v-text-field
-						v-model="email"
+						v-model="formData.email"
 						:rules="emailRules"
 						color="#e9983e"
 						type="email"
@@ -18,7 +18,7 @@
 						label="Email address"
 					></v-text-field>
 					<v-text-field 
-						v-model="password"
+						v-model="formData.password"
 						:rules="passwordRules"
 						color="#e9983e"
 						type="password"
@@ -33,7 +33,7 @@
 						label="retype password"
 						class="form-input"
 					></v-text-field>
-					<v-btn type="submit" block class="mt-2 submit-btn">
+					<v-btn type="submit" block class="mt-2 submit-btn" @click="isLoginForm ? login() : register()">
 						{{isLoginForm ? 'Login' : 'Register'}}
 					</v-btn>
 					<div class="link-wrapper">
@@ -49,10 +49,11 @@
 import iconImg from '@/assets/icon.png';
 import titleImg from '@/assets/title.png';
 import { ref } from 'vue';
+import { useAuthStore } from '@/store/AuthStore';
+
 const isLoginForm = ref(true);
-const email = ref();
-const password = ref();
-// const retypePassword = ref();
+const formData = ref({});
+const authStore = useAuthStore();
 
 const toggleForm = () => {
 	isLoginForm.value = !isLoginForm.value;
@@ -86,11 +87,20 @@ const retypePasswordRules = [
 		return 'Password is required'
 	},
 	(value) => {
-		if(value === password.value) return true
+		if(value === formData.value.password) return true
 		return 'Passwords do not match'
 	}
 ]
 
+const login = () => {
+	console.log('login formData is', formData.value);
+	authStore.login(formData);
+}
+
+const register = () => {
+	console.log('register formData is', formData);
+	authStore.register(formData.value);
+}
 </script>
 
 <style lang="scss" scoped>

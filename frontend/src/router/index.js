@@ -8,7 +8,7 @@ import LayoutLogin from '../layout/LayoutLogin.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     meta: {
       layout: LayoutLogin,
