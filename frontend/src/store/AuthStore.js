@@ -26,8 +26,11 @@ export const useAuthStore = defineStore('authstore',{
         async login(details) {
             const { email, password } = details;
             try {
+                console.log(`email is ${email} and password is ${password}`);
                 await signInWithEmailAndPassword(auth, email, password)
             } catch (error) {
+                console.log('errow with code of',error.code);
+
                 switch(error.code) {
                     case 'auth/user-not-found':
                       alert("User not found")

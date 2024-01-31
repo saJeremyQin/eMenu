@@ -94,11 +94,11 @@ const retypePasswordRules = [
 
 const login = () => {
 	console.log('login formData is', formData.value);
-	authStore.login(formData);
+	authStore.login(formData.value);
 }
 
 const register = () => {
-	console.log('register formData is', formData);
+	console.log('register formData is', formData.value);
 	authStore.register(formData.value);
 }
 </script>
