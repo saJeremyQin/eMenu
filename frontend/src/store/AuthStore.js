@@ -80,13 +80,13 @@ export const useAuthStore = defineStore('authstore',{
         },
         async logout() {
             try {
-                signOut()
+                await signOut(auth);
             } catch (error) {
                 console.log(error.message);
             }
             this.clearUser();
             router.push({
-                path:'/'
+                path:'/login'
             })
         },
         setUserFromFirebase () {
