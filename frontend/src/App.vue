@@ -4,13 +4,15 @@
   </component>
 </template>
 
-<script>
+<script setup>
+import { useAuthStore } from './store/AuthStore';
+import { onBeforeMount } from 'vue';
 
-export default {
-  name: 'App',
-  components: {
-  }
-}
+const authStore = useAuthStore();
+
+onBeforeMount(() => {
+  authStore.setUserFromFirebase();
+})
 </script>
 
 <style>

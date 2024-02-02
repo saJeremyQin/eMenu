@@ -77,7 +77,7 @@ const passwordRules = [
 	},
 	(value) => {
 		if(value.length >= 6) return true
-		return 'Password must be at least 6 characters'
+		return 'Password is too short'
 	}
 ];
 

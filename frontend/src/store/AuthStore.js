@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('authstore',{
                 return;
             }
 
-            this.setUser(auth.currentUser);
+            // this.setUser(auth.currentUser);
             router.push({
                 path:'/home'     
             });
@@ -73,7 +73,7 @@ export const useAuthStore = defineStore('authstore',{
                 }
                 return ;
             }
-            this.setUser(auth.currentUser);
+            // this.setUser(auth.currentUser);
             router.push({
                 path:'/home'     
             });
@@ -87,6 +87,23 @@ export const useAuthStore = defineStore('authstore',{
             this.clearUser();
             router.push({
                 path:'/'
+            })
+        },
+        setUserFromFirebase () {
+            auth.onAuthStateChanged(async user => {
+                console.log('onAuthStateChanged:', user);
+
+                if (user === null) {
+                    console.log('User is null, clearing user...');
+                    this.clearUser();
+                } else {
+                    console.log('User is not null, setting user:', user);
+                    this.setUser(user);
+                    if (router.isReady() && router.currentRoute.value.path === '/login') {
+                        router.push('/home')
+                    }
+                }
+                
             })
         }
     }
