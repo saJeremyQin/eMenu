@@ -5,6 +5,7 @@ import PageAbout from '../pages/PageAbout.vue';
 import PageNotFound from '../pages/PageNotFound.vue';
 import LayoutStandard from '../layout/LayoutStandard.vue';
 import LayoutLogin from '../layout/LayoutLogin.vue';
+import auth from "@/firebase";
 
 const routes = [
   {
@@ -52,4 +53,16 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
+router.beforeEach((to,from,next) => {
+  if(to.path === '/login' && auth.currentUser) {
+    next('/home')
+    return
+  }
+  if(to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
+    next('/login')
+    return
+  }
+  next()
+})
 export default router;
