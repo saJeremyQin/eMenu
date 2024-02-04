@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer app>
+    <v-navigation-drawer class="drawer">
       <v-list>
         <v-list-item-group v-for="(item, index) in menuItems" :key="index">
           <v-list-item>
@@ -17,7 +17,7 @@
               </v-list-item>
             </template>
 
-            <v-list></v-list> <!-- Optional: Add an empty list to create spacing -->
+            <v-list></v-list> 
           </v-menu>
         </v-list-item-group>
       </v-list>
@@ -49,9 +49,9 @@ const menuItems = [
     ],
   },
   {
-    text: 'RestaurantInfo',
+    text: 'Restaurant',
     children: [
-      { text: 'Update Restaurant' },
+      { text: 'Restaurant Info' },
     ],
   },
 ];
@@ -59,14 +59,20 @@ const menuItems = [
 </script>
 
 <style scoped>
+.drawer {
+  background-color: #3a3d48;
+  color: #fbfbfc;
+}
+
 .menu-title {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 10px;
 }
-
-/* Optional: Add styling to create indentation */
 .v-menu {
   margin-left: 20px;
 }
 </style>
+
+ 
+
