@@ -1,41 +1,42 @@
-<template>
-    <v-app-bar color="#25262d" class="app-bar">
-      <v-container class="app-bar-container">
-        <v-row align="center">
-          <v-col>
+<template>x
+    <v-app-bar
+        color="#25262d"
+    >
+        <template v-slot:prepend>
             <v-img :src="iconImg" class="icon-img" />
-          </v-col>
-          <v-col class="btn-end">
-            <v-btn @click="logout" class="logout-btn">Logout</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+        </template>
+
+        <v-app-bar-title>eMenu</v-app-bar-title>
+
+        <template v-slot:append>
+          <v-btn @click="logout">logout</v-btn>
+        </template>
     </v-app-bar>
-  </template>
+</template>
   
-  <script setup>
-  import { useAuthStore } from '@/store/AuthStore';
-  import iconImg from '@/assets/icon.png';
-  
-  const authStore = useAuthStore();
-  
-  const logout = () => {
+<script setup>
+import { useAuthStore } from '@/store/AuthStore';
+import iconImg from '@/assets/icon.png';
+
+const authStore = useAuthStore();
+
+const logout = () => {
     authStore.logout();
-  };
-  </script>
+};
+</script>
   
-  <style lang="scss" scoped>
-  .app-bar-container {
+<style lang="scss" scoped>
+.app-bar-container {
     max-width: 100%;
-  }
-  
-  .icon-img {
+}
+
+.icon-img {
     width: 64px;
     height: 64px;
-  }
-  
-  .btn-end {
-    text-align: end;
-  }
-  </style>
+}
+
+.btn-end {
+text-align: end;
+}
+</style>
   
