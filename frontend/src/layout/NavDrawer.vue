@@ -16,7 +16,7 @@
         <v-list-item 
           v-for="subMenu in item.subMenuItems" 
           :key="subMenu" 
-          :title="subMenu" 
+          :title="subMenu.title" 
           prepend-icon="mdi-bat"
           class="menu-item"
           :class="{'selected':selectedItem === subMenu.title}"
@@ -47,17 +47,36 @@ const menuItems = ref([
   {
     title: 'Dish Management',
     active: false,
-    subMenuItems: ['Dish Types','Dishes', 'Create Dish'],
+    subMenuItems: [
+      {
+        title:'Dish Types',
+      },
+      {
+        title:'Dishes',
+      }, 
+      {
+        title:'Create Dish',
+      },
+    ],
   },
   {
     title: 'Waiter Management',
     active: false,
-    subMenuItems: ['Waiters', 'Create Waiter'],
+    subMenuItems: [
+      {
+        title:'Waiters',
+      }, 
+      {
+        title:'Create Waiter',
+      }],
   },
   {
     title: 'Restaurant',
     active: false,
-    subMenuItems: ['Restaurant Info'],
+    subMenuItems: [
+      {
+        title:'Restaurant Info',
+      }],
   },
 ]);
 
