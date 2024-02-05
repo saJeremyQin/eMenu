@@ -3,14 +3,25 @@
     <v-list density="compact" :opened="opened" @update:opened="opened = $event.slice(-1)">
       <v-list-group v-for="item in menuItems" :key="'group_'+item.title" :value="item" prepend-icon="mdi-home">
         <template v-slot:activator="{props}">
-            <v-list-item
-                v-bind="props"
-                :key="'item_'+item.title" 
-                :title="item.title"
-            ></v-list-item>
+          <v-list-item
+              v-bind="props"
+              :key="'item_'+item.title" 
+              :title="item.title"
+              class="menu-item"
+              :class="{'selected':selectedItem === item.title}"
+              @click="selectItem(item.title)"
+          ></v-list-item>
         </template>
 
-        <v-list-item v-for="subMenu in item.subMenuItems" :key="subMenu" :title="subMenu" prepend-icon="mdi-bat">
+        <v-list-item 
+          v-for="subMenu in item.subMenuItems" 
+          :key="subMenu" 
+          :title="subMenu" 
+          prepend-icon="mdi-bat"
+          class="menu-item"
+          :class="{'selected':selectedItem === subMenu.title}"
+          @click="selectItem(subMenu.title)"
+        >
         </v-list-item>
       </v-list-group>
     </v-list>
@@ -21,6 +32,11 @@
 import { ref } from 'vue';
 const drawer = ref(true);
 const opened = ref([]);
+const selectedItem = ref(null);
+
+const selectItem = (value) => {
+  selectedItem.value = value;
+}
 
 const menuItems = ref([
   {
@@ -53,11 +69,12 @@ const menuItems = ref([
   color: #fbfbfc;
 }
 
-.menu-title {
+:deep(.menu-item) {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   margin-bottom: 10px;
   cursor: pointer;
+  padding-left: 2px; /* Adjust the gap between icon and text */
 }
 
 .selected {
