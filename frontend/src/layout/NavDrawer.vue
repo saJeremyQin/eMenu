@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawer" temporary class="drawer">
     <v-list density="compact" :opened="opened" @update:opened="opened = $event.slice(-1)">
-      <v-list-group v-for="item in menuItems" :key="'group_'+item.title" :value="item">
+      <v-list-group v-for="item in menuItems" :key="'group_'+item.title" :value="item" prepend-icon="mdi-home">
         <template v-slot:activator="{props}">
             <v-list-item
                 v-bind="props"
@@ -10,7 +10,8 @@
             ></v-list-item>
         </template>
 
-        <v-list-item v-for="subMenu in item.subMenuItems" :key="subMenu" :title="subMenu"></v-list-item>
+        <v-list-item v-for="subMenu in item.subMenuItems" :key="subMenu" :title="subMenu" prepend-icon="mdi-bat">
+        </v-list-item>
       </v-list-group>
     </v-list>
   </v-navigation-drawer>
