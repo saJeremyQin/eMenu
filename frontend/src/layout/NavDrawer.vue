@@ -1,60 +1,48 @@
 <template>
-    <v-navigation-drawer class="drawer">
-      <v-list>
-        <v-list-item-group v-for="(item, index) in menuItems" :key="index">
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="menu-title">{{ item.text }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+  <v-navigation-drawer v-model="drawer" temporary class="drawer">
+    <v-list density="compact" :opened="opened" @update:opened="opened = $event.slice(-1)">
+      <v-list-group v-for="item in menuItems" :key="'group_'+item.title" :value="item">
+        <template v-slot:activator="{props}">
+            <v-list-item
+                v-bind="props"
+                :key="'item_'+item.title" 
+                :title="item.title"
+            ></v-list-item>
+        </template>
 
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-list-item v-for="(childItem, childIndex) in item.children" :key="childIndex" v-on="on">
-                <v-list-item-content>
-                  <v-list-item-title>{{ childItem.text }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-
-            <v-list></v-list> 
-          </v-menu>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+        <v-list-item v-for="subMenu in item.subMenuItems" :key="subMenu" :title="subMenu"></v-list-item>
+      </v-list-group>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup>
-const menuItems = [
+import { ref } from 'vue';
+const drawer = ref(true);
+const opened = ref([]);
+
+const menuItems = ref([
   {
-    text: 'Home',
-    children: [
-      { text: 'Dashboard' },
-      { text: 'Profile' },
-    ],
+    title: 'Home',
+    active: true,
+    subMenuItems:[],
   },
   {
-    text: 'Dish Management',
-    children: [
-      { text: 'Dish Types' },
-      { text: 'Dishes' },
-      { text: 'Create Dish' },
-    ],
+    title: 'Dish Management',
+    active: false,
+    subMenuItems: ['Dish Types','Dishes', 'Create Dish'],
   },
   {
-    text: 'Waiter Management',
-    children: [
-      { text: 'Waiters' },
-      { text: 'Create Waiter' },
-    ],
+    title: 'Waiter Management',
+    active: false,
+    subMenuItems: ['Waiters', 'Create Waiter'],
   },
   {
-    text: 'Restaurant',
-    children: [
-      { text: 'Restaurant Info' },
-    ],
+    title: 'Restaurant',
+    active: false,
+    subMenuItems: ['Restaurant Info'],
   },
-];
+]);
 
 </script>
 
@@ -68,11 +56,11 @@ const menuItems = [
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
-.v-menu {
-  margin-left: 20px;
+
+.selected {
+  background-color: #429488 !important;
+  color: #fff !important;
 }
 </style>
-
- 
-

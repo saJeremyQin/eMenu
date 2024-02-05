@@ -1,4 +1,4 @@
-<template>x
+<template>
     <v-app-bar
         color="#25262d"
     >
@@ -33,6 +33,7 @@ const logout = () => {
 .icon-img {
     width: 64px;
     height: 64px;
+    margin-left: 20px;
 }
 
 .btn-end {
