@@ -10,6 +10,7 @@
             class="menu-item"
             :class="{'selected':selectedItem === item.title}"
             @click="selectItem(item.title, item.path)"
+            to="/about"
           >
           </v-list-item>     
         </template>
@@ -31,16 +32,17 @@
 
 <script setup>
 import { ref } from 'vue';
-import router from '@/router';
+// import router from '@/router';
 const drawer = ref(true);
 const opened = ref([]);
 const selectedItem = ref(null);
 
 const selectItem = (title, path) => {
   selectedItem.value = title;
-  router.push({
-    path: path
-  })
+  console.log('path is', path);
+  // router.push({
+  //   path: path
+  // })
 }
 
 const menuItems = ref([
