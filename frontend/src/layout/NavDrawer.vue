@@ -3,14 +3,15 @@
     <v-list density="compact" :opened="opened" @update:opened="opened = $event.slice(-1)">
       <v-list-group v-for="item in menuItems" :key="'group_'+item.title" :value="item" prepend-icon="mdi-home">
         <template v-slot:activator="{props}">
-          <v-list-item
-              v-bind="props"
-              :key="'item_'+item.title" 
-              :title="item.title"
-              class="menu-item"
-              :class="{'selected':selectedItem === item.title}"
-              @click="selectItem(item.title)"
-          ></v-list-item>
+          <v-list-item  
+            v-bind="props"
+            :key="'item_'+item.title" 
+            :title="item.title"
+            class="menu-item"
+            :class="{'selected':selectedItem === item.title}"
+            @click="selectItem(item.title, item.path)"
+          >
+          </v-list-item>     
         </template>
 
         <v-list-item 
@@ -20,7 +21,7 @@
           prepend-icon="mdi-bat"
           class="menu-item"
           :class="{'selected':selectedItem === subMenu.title}"
-          @click="selectItem(subMenu.title)"
+          @click="selectItem(subMenu.title, subMenu.path)"
         >
         </v-list-item>
       </v-list-group>
@@ -30,52 +31,66 @@
 
 <script setup>
 import { ref } from 'vue';
+import router from '@/router';
 const drawer = ref(true);
 const opened = ref([]);
 const selectedItem = ref(null);
 
-const selectItem = (value) => {
-  selectedItem.value = value;
+const selectItem = (title, path) => {
+  selectedItem.value = title;
+  router.push({
+    path: path
+  })
 }
 
 const menuItems = ref([
   {
     title: 'Home',
+    path:'/home',
     active: true,
     subMenuItems:[],
   },
   {
     title: 'Dish Management',
+    path:'/about',
     active: false,
     subMenuItems: [
       {
         title:'Dish Types',
+        path:'/about'
       },
       {
         title:'Dishes',
+        path:'/about',
       }, 
       {
         title:'Create Dish',
+        path:'/about',
       },
     ],
   },
   {
     title: 'Waiter Management',
+    path:'/about',
     active: false,
     subMenuItems: [
       {
         title:'Waiters',
+        path:'/about',
       }, 
       {
         title:'Create Waiter',
+        path:'/about',
       }],
   },
   {
     title: 'Restaurant',
+    path:'/about',
     active: false,
     subMenuItems: [
       {
         title:'Restaurant Info',
+        path:'/about'
       }],
   },
 ]);
