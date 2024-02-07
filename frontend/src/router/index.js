@@ -6,7 +6,7 @@ import PageNotFound from '../pages/PageNotFound.vue';
 import LayoutStandard from '../layout/LayoutStandard.vue';
 import LayoutLogin from '../layout/LayoutLogin.vue';
 // import { inject } from "vue";
-import auth from "@/firebase";
+import { getCurrentUser } from "@/firebase";
 
 
 const routes = [
@@ -57,17 +57,18 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const user = await auth.currentUser;
+  const user = await getCurrentUser();
+  const requireAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requireAuth && !user) {
+    console.log('User is not authenticated, redirecting to login page.');
+    next('/login');
+    return;
+  }
 
   if(user && to.path === 'login') {
     next('/home');
     return ;
-  }
-
-  if (to.matched.some(record => record.meta.requiresAuth) && !user) {
-    console.log('User is not authenticated, redirecting to login page.');
-    next('/login');
-    return;
   }
 
   next();

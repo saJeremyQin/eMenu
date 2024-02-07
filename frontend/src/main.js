@@ -7,7 +7,7 @@ import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loade
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import auth from './firebase'
+import {auth}from './firebase'
 import { useAuthStore } from './store/AuthStore'
 import { onAuthStateChanged } from 'firebase/auth'
 

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import auth from "@/firebase";
+import {auth} from "@/firebase";
 import router from "@/router";
 import { 
     createUserWithEmailAndPassword, 
