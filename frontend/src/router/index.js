@@ -55,14 +55,14 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to,from,next) => {
-    // Wait for the authentication state to be resolved
-    await new Promise(resolve => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        console.log(user);
-        unsubscribe(); // Unsubscribe once the state is resolved
-        resolve();     // Resolve the promise
-      });
+  // Wait for the authentication state to be resolved
+  await new Promise(resolve => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      console.log(user);
+      unsubscribe(); // Unsubscribe once the state is resolved
+      resolve();     // Resolve the promise
     });
+  });
   if(to.path === '/login' && auth.currentUser) {
     console.log('come here when i am about?');
     next('/home')
