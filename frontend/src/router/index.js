@@ -9,10 +9,6 @@ import auth from "@/firebase";
 
 const routes = [
   {
-    path: '/',
-    redirect: '/home',
-  },
-  {
     path: '/login',
     name: 'Login',
     meta: {
@@ -45,7 +41,10 @@ const routes = [
       default: PageAbout
     },
   },
-  
+  {
+    path: '/',
+    redirect: '/home',
+  },
   { path: '/:pathMatch(.*)*', component: PageNotFound },
 ];
 
