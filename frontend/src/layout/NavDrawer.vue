@@ -10,7 +10,7 @@
             class="menu-item"
             :class="{'selected':selectedItem === item.title}"
             @click="selectItem(item.title, item.path)"
-            to="/about"
+            router :to="item.path"
           >
           </v-list-item>     
         </template>

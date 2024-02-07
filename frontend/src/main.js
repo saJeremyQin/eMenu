@@ -2,17 +2,22 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-
-const pinia = createPinia()
-const app = createApp(App)
-
-app.use(pinia)
-// Vuetify
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import auth from './firebase'
+import { useAuthStore } from './store/AuthStore'
+import { onAuthStateChanged } from 'firebase/auth'
+
+const pinia = createPinia()
+const app = createApp(App)
+
+app.use(pinia);
+
+const authStore = useAuthStore();
+app.provide('authStore', authStore);
 
 const vuetify = createVuetify({
   components,
@@ -23,3 +28,13 @@ const vuetify = createVuetify({
 })
 
 app.use(router).use(vuetify).mount('#app')
+
+
+onAuthStateChanged(auth, (user) => {
+  console.log('user in main.js is ',user);
+  authStore.setUser(user);
+   // 只有当应用程序初始化完成后，才跳转到相应页面
+  if (app && router.currentRoute.value.path === '/login') {
+    router.push('/home');
+  }
+});

@@ -5,13 +5,17 @@
 </template>
 
 <script setup>
-import { useAuthStore } from './store/AuthStore';
 import { onBeforeMount } from 'vue';
 
-const authStore = useAuthStore();
-
 onBeforeMount(() => {
-  authStore.setUserFromFirebase();
+  // authStore.setUserFromFirebase();
+  // onAuthStateChanged(auth, (user) => {
+  //   console.log('user in app.vue is ', user);
+  //   authStore.setUser(user);
+  //   if (router.isReady() && router.currentRoute.value.path === '/login') {
+  //       router.push('/home')
+  //   }
+  // })
 })
 </script>
 

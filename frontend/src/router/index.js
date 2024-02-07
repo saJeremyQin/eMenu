@@ -5,7 +5,8 @@ import PageAbout from '../pages/PageAbout.vue';
 import PageNotFound from '../pages/PageNotFound.vue';
 import LayoutStandard from '../layout/LayoutStandard.vue';
 import LayoutLogin from '../layout/LayoutLogin.vue';
-import auth from "@/firebase";
+import { inject } from "vue";
+
 
 const routes = [
   {
@@ -54,24 +55,28 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to,from,next) => {
-    // Wait for the authentication state to be resolved
-    await new Promise(resolve => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
-        console.log(user);
-        unsubscribe(); // Unsubscribe once the state is resolved
-        resolve();     // Resolve the promise
-      });
-    });
-  if(to.path === '/login' && auth.currentUser) {
-    console.log('come here when i am about?');
-    next('/home')
-    return
+router.beforeEach((to, from, next) => {
+  const authStore = inject('authStore');
+
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    next();
+    return;
   }
-  if(to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
-    next('/login')
-    return
+
+  if (to.matched.some(record => record.meta.requiresAuth) && !authStore.user) {
+    console.log('User is not authenticated, redirecting to login page.');
+    next('/login');
+    return;
   }
-  next()
-})
+
+  if (to.path === '/login' && authStore.user) {
+    console.log('User is already authenticated, redirecting to home page.');
+    next('/home');
+    return;
+  }
+
+  next();
+});
+
+
 export default router;
