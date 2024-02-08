@@ -1,13 +1,14 @@
 
 <template>
-      <v-container class="mt-3 mx-5">
+      <!-- <v-container class="mt-3 mx-5">
         <h3>Hi</h3>
         <v-text-field
               label="Outlined"
               outlined
               dense
             ></v-text-field>         
-      </v-container>
+      </v-container> -->
+      <h3>Hi, this is about</h3>
 </template>
 
 <script setup>
