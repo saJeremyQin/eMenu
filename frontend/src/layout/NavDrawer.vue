@@ -10,7 +10,7 @@
             :class="{'menu-item--selected': selectedItem === item.title}"
           >
             <router-link :to="{path:'/about'}" class="menu-item__link">
-              <v-icon icon="mdi-home" class="menu-item__icon"></v-icon>            
+              <v-icon :icon="item.icon" class="menu-item__icon"></v-icon>            
               <v-list-item-content  class="menu-item__content">
                 {{ item.title }}
               </v-list-item-content>
@@ -26,7 +26,7 @@
           @click="selectItem(subMenu.title, subMenu.path)"
           >
             <router-link :to="{path:'/about'}" class="menu-item__link">
-              <v-icon icon="mdi-note" class="menu-item__icon"></v-icon>            
+              <v-icon :icon="subMenu.icon" class="menu-item__icon"></v-icon>            
               <v-list-item-content class="menu-item__content">
                 {{ subMenu.title }}
               </v-list-item-content>
@@ -52,50 +52,60 @@ const menuItems = ref([
   {
     title: 'Home',
     path:'/home',
+    icon:'mdi-home',
     active: true,
     subMenuItems:[],
   },
   {
     title: 'Dish Management',
     path:'/about',
+    icon:'mdi-chili-hot',
     active: false,
     subMenuItems: [
       {
         title:'Dish Types',
-        path:'/about'
+        path:'/about',
+        icon:'mdi-carrot'
       },
       {
         title:'Dishes',
         path:'/about',
+        icon:'mdi-cake'
       }, 
       {
         title:'Create Dish',
         path:'/about',
+        icon:'mdi-candy'
       },
     ],
   },
   {
     title: 'Waiter Management',
     path:'/about',
+    icon:'mdi-account-box-outline',
     active: false,
     subMenuItems: [
       {
         title:'Waiters',
         path:'/about',
+        icon:'mdi-account-tie'
       }, 
       {
         title:'Create Waiter',
         path:'/about',
+        icon:'mdi-account-edit'
       }],
   },
   {
     title: 'Restaurant',
     path:'/about',
+    icon:'mdi-table-chair',
     active: false,
     subMenuItems: [
       {
         title:'Restaurant Info',
-        path:'/about'
+        path:'/about',
+        icon:'mdi-silverware'
       }],
   },
 ]);
