@@ -9,7 +9,7 @@
             @click="selectItem(item.title, item.path)"
             :class="{'menu-item--selected': selectedItem === item.title}"
           >
-            <router-link :to="{path:'/about'}">
+            <router-link :to="{path:'/about'}" class="menu-item__link">
               <v-icon icon="mdi-home" class="menu-item__icon"></v-icon>            
               <v-list-item-content  class="menu-item__content">
                 {{ item.title }}
@@ -21,14 +21,14 @@
         <v-list-item 
           v-for="subMenu in item.subMenuItems" 
           :key="subMenu" 
-          prepend-icon="mdi-bat"
           class="menu-item"
           :class="{'menu-item--selected': selectedItem === subMenu.title}"
           @click="selectItem(subMenu.title, subMenu.path)"
           >
-            <router-link :to="{path:'/about'}">
+            <router-link :to="{path:'/about'}" class="menu-item__link">
+              <v-icon icon="mdi-note" class="menu-item__icon"></v-icon>            
               <v-list-item-content class="menu-item__content">
-                {{ item.title }}
+                {{ subMenu.title }}
               </v-list-item-content>
             </router-link>
         </v-list-item>
@@ -36,7 +36,6 @@
     </v-list>
   </v-navigation-drawer>
 </template>
-
 
 <script setup>
 import { ref } from 'vue';
@@ -103,13 +102,14 @@ const menuItems = ref([
 
 </script>
 
+
 <style lang="scss" scoped>
 .drawer {
   background-color: #3a3d48;
 }
+
 .menu-item {
   &__content {
-    //menuItem content
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 10px;
@@ -119,15 +119,17 @@ const menuItems = ref([
   }
 
   &--selected {
-    // when selected
     background-color: #429488 !important;
     color: #fff !important;
+    text-decoration: none;
   }
 
   &__icon {
-    // 图标样式
     color: #fbfbfc;
   }
-}
 
+  &__link {
+    text-decoration: none; // 移除链接的下划线
+  }
+}
 </style>
