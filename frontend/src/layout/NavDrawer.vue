@@ -9,7 +9,7 @@
             @click="selectItem(item.title, item.path)"
             :class="{'menu-item--selected': selectedItem === item.title}"
           >
-            <router-link :to="{path:'/about'}" class="menu-item__link">
+            <router-link :to="{path: item.path}" class="menu-item__link">
               <v-icon :icon="item.icon" class="menu-item__icon"></v-icon>            
               <v-list-item-content  class="menu-item__content">
                 {{ item.title }}
@@ -25,7 +25,7 @@
           :class="{'menu-item--selected': selectedItem === subMenu.title}"
           @click="selectItem(subMenu.title, subMenu.path)"
           >
-            <router-link :to="{path:'/about'}" class="menu-item__link">
+            <router-link :to="{path: subMenu.path}" class="menu-item__link">
               <v-icon :icon="subMenu.icon" class="menu-item__icon"></v-icon>            
               <v-list-item-content class="menu-item__content">
                 {{ subMenu.title }}
@@ -58,53 +58,53 @@ const menuItems = ref([
   },
   {
     title: 'Dish Management',
-    path:'/about',
+    path:'/dishes',
     icon:'mdi-chili-hot',
     active: false,
     subMenuItems: [
       {
         title:'Dish Types',
-        path:'/about',
+        path:'/dishTypes',
         icon:'mdi-carrot'
       },
       {
         title:'Dishes',
-        path:'/about',
+        path:'/dishes',
         icon:'mdi-cake'
       }, 
       {
         title:'Create Dish',
-        path:'/about',
+        path:'/createDish',
         icon:'mdi-candy'
       },
     ],
   },
   {
     title: 'Waiter Management',
-    path:'/about',
+    path:'/waiters',
     icon:'mdi-account-box-outline',
     active: false,
     subMenuItems: [
       {
         title:'Waiters',
-        path:'/about',
+        path:'/waiters',
         icon:'mdi-account-tie'
       }, 
       {
         title:'Create Waiter',
-        path:'/about',
+        path:'/createWaiter',
         icon:'mdi-account-edit'
       }],
   },
   {
     title: 'Restaurant',
-    path:'/about',
+    path:'/restaurantInfo',
     icon:'mdi-table-chair',
     active: false,
     subMenuItems: [
       {
         title:'Restaurant Info',
-        path:'/about',
+        path:'/restaurantInfo',
         icon:'mdi-silverware'
       }],
   },
