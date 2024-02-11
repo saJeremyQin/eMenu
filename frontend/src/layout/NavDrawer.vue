@@ -58,7 +58,7 @@ const menuItems = ref([
   },
   {
     title: 'Dish Management',
-    path:'/dishes',
+    path:'/dishTypes',
     icon:'mdi-chili-hot',
     active: false,
     subMenuItems: [
