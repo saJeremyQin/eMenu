@@ -6,13 +6,13 @@
             Dish Types
           </v-card-title>
           <v-btn color="#4c9df8">
-           Add 
+           Add DishType
           </v-btn>
         </div>
         <v-divider class="divider"></v-divider>
       
         <v-card-text>
-          <v-table>
+          <v-table density="compact">
             <thead class="table-header">
               <tr>
                 <th class="text-left cell">
@@ -35,8 +35,8 @@
                 <td class="cell">{{ item.alias }}</td>
                 <td class="actions-td cell">
                   <div class="btn-group">
-                    <v-btn small color="primary" @click="editDishType(item)">Edit</v-btn>
-                    <v-btn small color="error" style="margin-left: 8px;" @click="deleteDishType(item)">Delete</v-btn>
+                    <v-btn density="compact" color="#429488" @click="editDishType(item)">Edit</v-btn>
+                    <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="deleteDishType(item)">Delete</v-btn>
                   </div>
                 </td>
               </tr>
