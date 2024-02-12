@@ -9,6 +9,7 @@
             v-model="dialog"
             persistent
             width="600"
+            height="330"
           >
             <template v-slot:activator="{ props }">
               <v-btn
@@ -21,6 +22,10 @@
             <v-card>
               <v-card-title class="dialog-title">
                 Add DishType
+                <v-spacer></v-spacer>
+                <v-btn class="close-btn" variant="plain" icon @click="dialog = false">
+                  <v-icon class="close-icon">mdi-close</v-icon>
+                </v-btn>
               </v-card-title>
               <v-card-text>
                 <v-container>
@@ -28,8 +33,9 @@
                     <v-col>
                       <div class="input-row">
                         <span class="label-text">DishType Name</span>
-                        <v-spacer></v-spacer>    
+                        <v-spacer></v-spacer>
                         <v-text-field
+                          v-model="dishTypeName"
                           placeholder="Input name here"
                           density="compact"
                           variant="outlined"
@@ -45,6 +51,7 @@
                         <span class="label-text">DishType Alias</span>
                         <v-spacer></v-spacer>
                         <v-text-field
+                          v-model="dishTypeAlias"
                           placeholder="Input alias here"
                           density="compact"
                           variant="outlined"
@@ -61,16 +68,16 @@
                 <v-btn
                   color="blue-darken-1"
                   variant="text"
-                  @click="dialog = false"
+                  @click="addDishType"
                 >
-                  Close
+                  Add
                 </v-btn>
                 <v-btn
                   color="blue-darken-1"
                   variant="text"
-                  @click="dialog = false"
+                  @click="resetNewDishType"
                 >
-                  Save
+                  Reset
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -118,7 +125,10 @@
 <script setup>
 import { ref } from 'vue'
 
-const dialog = ref();
+const dishTypeName = ref('');
+const dishTypeAlias = ref('');
+
+const dialog = ref(false);
 const dishTypes = [
     { id: 1, name: 'Main Course', alias: 'main' },
     { id: 2, name: 'Starter', alias: 'starter' },
@@ -130,6 +140,15 @@ const editDishType = (item) => {
 
 const deleteDishType = (item) => {
   console.log(item);
+}
+
+const addDishType = () => {
+  console.log(dishTypeAlias.value);
+  console.log(dishTypeName.value);
+}
+
+const resetNewDishType = () => {
+
 }
 </script>
 
@@ -182,19 +201,28 @@ const deleteDishType = (item) => {
   background-color: #f8f8f8;
   padding-left: 16px;
   font-size: medium;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-icon {
+  font-size: 18px;
+  line-height: 0; 
 }
 
 .input-row {
   display: flex;
   flex-direction: row;
-  margin:4px 20px;
+  margin:4px 25px;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: nowrap;
 }
 
 .text-field {
-  width: 360px;
+  width: 300px;
 }
 
 .label-text {
@@ -202,5 +230,6 @@ const deleteDishType = (item) => {
   display: inline-flex;
   align-items: center;
   padding-bottom: 20px;
+  margin-right: 10px;
 }
 </style>
