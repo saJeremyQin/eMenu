@@ -5,9 +5,6 @@
           <v-card-title>
             Dish Types
           </v-card-title>
-          <!-- <v-btn color="#4c9df8">
-           Add DishType
-          </v-btn> -->
           <v-dialog
             v-model="dialog"
             persistent
@@ -15,7 +12,7 @@
           >
             <template v-slot:activator="{ props }">
               <v-btn
-                color="primary"
+                color="#4c9df8"
                 v-bind="props"
               >
                 Add DishType
@@ -29,25 +26,32 @@
                 <v-container>
                   <v-row>
                     <v-col>
-                      <span class="label">DishType Name</span>    
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        label="name"
-                        required
-                      ></v-text-field>
+                      <div class="input-row">
+                        <span class="label-text">DishType Name</span>
+                        <v-spacer></v-spacer>    
+                        <v-text-field
+                          placeholder="Input name here"
+                          density="compact"
+                          variant="outlined"
+                          required
+                          class="text-field"
+                        ></v-text-field>
+                      </div>
                     </v-col>
                   </v-row>
-
                   <v-row>
                     <v-col>
-                      <span class="label">DishType Alias</span>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        label="alias"
-                        required
-                      ></v-text-field>
+                      <div class="input-row">
+                        <span class="label-text">DishType Alias</span>
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                          placeholder="Input alias here"
+                          density="compact"
+                          variant="outlined"
+                          required
+                          class="text-field"
+                        ></v-text-field>
+                      </div>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -178,5 +182,25 @@ const deleteDishType = (item) => {
   background-color: #f8f8f8;
   padding-left: 16px;
   font-size: medium;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  margin:4px 20px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.text-field {
+  width: 360px;
+}
+
+.label-text {
+  font-size: small;
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 20px;
 }
 </style>
