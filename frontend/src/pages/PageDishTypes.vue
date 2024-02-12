@@ -22,14 +22,14 @@
               </v-btn>
             </template>
             <v-card>
-              <v-card-title>
-                <span class="text-h5">Add DishType</span>
+              <v-card-title class="dialog-title">
+                Add DishType
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col>
-                      <span>DishType Name</span>
+                      <span class="label">DishType Name</span>    
                     </v-col>
                     <v-col>
                       <v-text-field
@@ -38,9 +38,10 @@
                       ></v-text-field>
                     </v-col>
                   </v-row>
+
                   <v-row>
                     <v-col>
-                      <span>DishType Alias</span>
+                      <span class="label">DishType Alias</span>
                     </v-col>
                     <v-col>
                       <v-text-field
@@ -48,7 +49,7 @@
                         required
                       ></v-text-field>
                     </v-col>
-                  </v-row>         
+                  </v-row>
                 </v-container>
               </v-card-text>
               <v-card-actions>
@@ -171,5 +172,11 @@ const deleteDishType = (item) => {
   margin-left: 4px;
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+.dialog-title {
+  background-color: #f8f8f8;
+  padding-left: 16px;
+  font-size: medium;
 }
 </style>
