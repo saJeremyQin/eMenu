@@ -5,10 +5,73 @@
           <v-card-title>
             Dish Types
           </v-card-title>
-          <v-btn color="#4c9df8">
+          <!-- <v-btn color="#4c9df8">
            Add DishType
-          </v-btn>
+          </v-btn> -->
+          <v-dialog
+            v-model="dialog"
+            persistent
+            width="600"
+          >
+            <template v-slot:activator="{ props }">
+              <v-btn
+                color="primary"
+                v-bind="props"
+              >
+                Add DishType
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Add DishType</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col>
+                      <span>DishType Name</span>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        label="name"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <span>DishType Alias</span>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        label="alias"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>         
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+                >
+                  Close
+                </v-btn>
+                <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
+    
         <v-divider class="divider"></v-divider>
       
         <v-card-text>
@@ -48,7 +111,9 @@
   </template>
 
 <script setup>
-// import { ref } from 'vue'
+import { ref } from 'vue'
+
+const dialog = ref();
 const dishTypes = [
     { id: 1, name: 'Main Course', alias: 'main' },
     { id: 2, name: 'Starter', alias: 'starter' },
