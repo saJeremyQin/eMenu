@@ -14,7 +14,7 @@ export const useDishTypeStore =  defineStore('dishTypeStore', {
         async fetchDishTypes () {
             // fetch dishtypes from contentful, CDA
             try {
-                const response = await axios.get('http://localhost:8000/api/dishtypes');
+                const response = await axios.get('/api/dishtypes');
                 if(response.data) {
                     this.$state.dishTypes = response.data;
                 } else {
