@@ -103,7 +103,6 @@ export const useAuthStore = defineStore('authstore',{
                         router.push('/home')
                     }
                 }
-                
             })
         }
     }
