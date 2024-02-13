@@ -1,5 +1,7 @@
 import express from "express";
+import cors from 'cors';
 import { createClient } from 'contentful';
+
 
 
 const app = express();
@@ -9,6 +11,8 @@ const client = createClient({
     environment: 'develop',
     accessToken: 'zu0M1zS19jfMeAroc1tARgWxD03jd8tWdG5nBtUJt9U',
 })
+
+app.use(cors());
 
 app.get('/hello', (req, res) => {
     res.send('Hello World');

@@ -12,8 +12,8 @@ const fetchClient = (() => {
     };
 
     const instance = axios.create({
-        // baseURL:'http://localhost:8000'
-        baseURL:'/'
+        baseURL:'http://localhost:8000'
+        // baseURL:'/'
     });
 
     instance.interceptors.request.use(async (config) =>{
