@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import axios from 'axios';
+// import axios from 'axios';
+import fetchClient from "@/utils/fetchClient";
 
 export const useDishTypeStore =  defineStore('dishTypeStore', {
     state:() => ({
@@ -14,14 +15,14 @@ export const useDishTypeStore =  defineStore('dishTypeStore', {
         async fetchDishTypes () {
             // fetch dishtypes from contentful, CDA
             try {
-                const response = await axios.get('/api/dishtypes');
+                const response = await fetchClient.get('/api/dishtypes');
                 if(response.data) {
                     this.$state.dishTypes = response.data;
                 } else {
                     alert('No dishtypes currently');
                 }
             } catch (error) {
-                console.error('Error fetching dish types:', error.message);
+                console.error('Error fetching dish types:', error);
             }
         },
         async createDishType(newDishType) {
