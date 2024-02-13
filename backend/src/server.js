@@ -24,6 +24,7 @@ app.get('/api/dishtypes', async (req, res) => {
         const dishtypes = response.items.map((item) => ({
             id: item.sys.id,
             name: item.fields.name,
+            alias: item.fields.alias
         }));
         res.send(dishtypes);
     } catch (error) {
