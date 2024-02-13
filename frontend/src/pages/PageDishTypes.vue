@@ -123,16 +123,20 @@
   </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { useDishTypeStore } from '@/store/DishTypeStore';
+import { onMounted } from 'vue';
 
 const dishTypeName = ref('');
 const dishTypeAlias = ref('');
+const dishTypes =  ref([]);
 
 const dialog = ref(false);
-const dishTypes = [
-    { id: 1, name: 'Main Course', alias: 'main' },
-    { id: 2, name: 'Starter', alias: 'starter' },
-];
+// const dishTypes = [
+//     { id: 1, name: 'Main Course', alias: 'main' },
+//     { id: 2, name: 'Starter', alias: 'starter' },
+// ];
+const dishTypeStore = useDishTypeStore();
 
 const editDishType = (item) => {
   console.log(item);
@@ -150,6 +154,13 @@ const addDishType = () => {
 const resetNewDishType = () => {
 
 }
+
+onMounted(async() => {
+  dishTypeStore.fetchDishTypes().then(()=> {
+    dishTypes.value = dishTypeStore.getDishTypes;
+    console.log('the value is ', dishTypes.value)
+  });
+})
 </script>
 
 <style lang="scss" scoped>
