@@ -1,8 +1,8 @@
 import express from "express";
 import cors from 'cors';
 import { createClient } from 'contentful';
-
-
+import admin from 'firebase-admin';
+import serviceAccount from "../eMenuAccountKey.json";
 
 const app = express();
 
@@ -12,13 +12,29 @@ const client = createClient({
     accessToken: 'zu0M1zS19jfMeAroc1tARgWxD03jd8tWdG5nBtUJt9U',
 })
 
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://emenu-41e86.firebaseio.com"
+});
+
+// Middleware to verify user
+const authenticateUser = async (req, res, next) => {
+    try {
+      const idToken = req.header('Authorization').replace('Bearer ', '');
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      console.log('decodedToken is ', decodedToken);
+      // attach userinfo to token
+      req.user = decodedToken;  
+      next();
+    } catch (error) {
+      console.error('Error authenticating user:', error);
+      res.status(401).json({ error: 'Unauthorized' });
+    }
+};
+
 app.use(cors());
 
-app.get('/hello', (req, res) => {
-    res.send('Hello World');
-})
-
-app.get('/api/dishtypes', async (req, res) => {
+app.get('/api/dishtypes',authenticateUser, async (req, res) => {
     try {
         const response = await client.getEntries({
             content_type: 'dishType'
