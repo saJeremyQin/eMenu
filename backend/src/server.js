@@ -117,7 +117,19 @@ app.post('/api/registerUser', authenticateUser, async(req, res) => {
                 },
                 fbUserId: {
                     'en-US': uid
-                }
+                },
+                userRole: {
+                    'en-US': 'Owner'
+                },
+                userLevel: {
+                    'en-US': 1
+                },
+                dishTypesQtyLeft: {
+                    'en-US': 3
+                },
+                dishesQtyLeft: {
+                    'en-US': 10
+                }      
             }
         }
         console.log('userData is ', userData);
