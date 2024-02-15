@@ -10,20 +10,21 @@
 				<v-img :src="titleImg" class="title-img"></v-img>
 				<v-form @submit.prevent class="form">
 					<v-text-field
-						v-model="formData.username"
-						:rules="usernameRules"
-						color="#e9983e"
-						type="username"
-						class="form-input"
-						label="Username"
-					></v-text-field>
-					<v-text-field
 						v-model="formData.email"
 						:rules="emailRules"
 						color="#e9983e"
 						type="email"
 						class="form-input"
 						label="Email address"
+					></v-text-field>
+					<v-text-field
+						v-if="!isLoginForm"	
+						v-model="formData.username"
+						:rules="usernameRules"
+						color="#e9983e"
+						type="username"
+						class="form-input"
+						label="Username"
 					></v-text-field>
 					<v-text-field 
 						v-model="formData.password"

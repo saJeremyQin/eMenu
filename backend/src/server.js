@@ -126,6 +126,8 @@ app.post('/api/registerUser', authenticateUser, async(req, res) => {
         const userEntry = await cmaClient.getSpace(spaceId)
             .then(space => space.getEnvironment(environmentId))
             .then(environment => environment.createEntry(contentType, userData));
+
+        await userEntry.publish();
         
         res.status(201).json({user: userEntry});
     } catch (error) {
