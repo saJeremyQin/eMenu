@@ -8,6 +8,9 @@ import serviceAccount from "../eMenuAccountKey.json";
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+
 const cdaClient = createCDA({
     space: 'xcgzqirx0bln',
     environment: 'develop',
@@ -40,7 +43,6 @@ const authenticateUser = async (req, res, next) => {
     }
 };
 
-app.use(cors());
 
 app.get('/api/dishtypes',authenticateUser, async (req, res) => {
     try {
@@ -96,7 +98,9 @@ app.get('/api/dishes/:fbUserId/:dishtypeId', async (req, res) => {
 app.post('/api/registerUser', authenticateUser, async(req, res) => {
     try {
         // create entry in contentful, setup env related
-        const { email, uid, username } = req.user;
+        const { email, uid } = req.user;
+        const { username } = req.body;
+        console.log(username);
 
         const spaceId = 'xcgzqirx0bln';
         const environmentId = 'develop';
@@ -109,13 +113,15 @@ app.post('/api/registerUser', authenticateUser, async(req, res) => {
                     'en-US': email
                 },
                 username: {
-                    'en-US': username
+                    'en-US': username   
                 },
                 fbUserId: {
                     'en-US': uid
                 }
             }
         }
+        console.log('userData is ', userData);
+
         // use cmaClient to create user entry
         const userEntry = await cmaClient.getSpace(spaceId)
             .then(space => space.getEnvironment(environmentId))

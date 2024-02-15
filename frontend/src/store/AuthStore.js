@@ -5,8 +5,9 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     signOut, 
-    updateProfile
+    // updateProfile
 } from 'firebase/auth';
+import fetchClient from "@/utils/fetchClient";
 
 export const useAuthStore = defineStore('authstore',{
     state: () => ({
@@ -55,7 +56,10 @@ export const useAuthStore = defineStore('authstore',{
             console.log(`email is ${email}, password is ${password}, username is ${username}`);
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                await updateProfile(auth.currentUser, {displayName:username});
+                // await updateProfile(auth.currentUser, {displayName:username});
+                await fetchClient.post('/api/registerUser', {
+                    username
+                });
             } catch (error) {
                 switch(error.code) {
                     case 'auth/email-already-in-use':
