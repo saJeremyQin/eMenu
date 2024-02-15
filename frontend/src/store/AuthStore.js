@@ -4,7 +4,8 @@ import router from "@/router";
 import { 
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
-    signOut 
+    signOut, 
+    updateProfile
 } from 'firebase/auth';
 
 export const useAuthStore = defineStore('authstore',{
@@ -50,10 +51,11 @@ export const useAuthStore = defineStore('authstore',{
             });
         },
         async register(details) {
-            const { email, password } = details;
-            console.log(`email is ${email}, password is ${password}`);
+            const { email, username, password } = details;
+            console.log(`email is ${email}, password is ${password}, username is ${username}`);
             try {
-                createUserWithEmailAndPassword(auth, email, password)
+                await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(auth.currentUser, {displayName:username});
             } catch (error) {
                 switch(error.code) {
                     case 'auth/email-already-in-use':
@@ -91,13 +93,13 @@ export const useAuthStore = defineStore('authstore',{
         },
         setUserFromFirebase () {
             auth.onAuthStateChanged(async user => {
-                console.log('onAuthStateChanged:', user);
+                // console.log('onAuthStateChanged:', user);
 
                 if (user === null) {
-                    console.log('User is null, clearing user...');
+                    // console.log('User is null, clearing user...');
                     this.clearUser();
                 } else {
-                    console.log('User is not null, setting user:', user);
+                    // console.log('User is not null, setting user:', user);
                     this.setUser(user);
                     if (router.isReady() && router.currentRoute.value.path === '/login') {
                         router.push('/home')

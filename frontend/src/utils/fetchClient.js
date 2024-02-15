@@ -8,7 +8,6 @@ const fetchClient = (() => {
         } catch (error) {
             console.log('getAuthToken ', error);
         }
-
     };
 
     const instance = axios.create({

@@ -1,15 +1,23 @@
 import express from "express";
 import cors from 'cors';
-import { createClient } from 'contentful';
+import { createClient as createCDA } from 'contentful';
+import { createClient as createCMA } from 'contentful-management';
+
 import admin from 'firebase-admin';
 import serviceAccount from "../eMenuAccountKey.json";
 
 const app = express();
 
-const client = createClient({
+const cdaClient = createCDA({
     space: 'xcgzqirx0bln',
     environment: 'develop',
     accessToken: 'zu0M1zS19jfMeAroc1tARgWxD03jd8tWdG5nBtUJt9U',
+})
+
+const cmaClient = createCMA({
+    space: 'xcgzqirx0bln',
+    environment: 'develop',
+    accessToken:'CFPAT-Um3vfnH5eISh-24r-RNgbKaRcsUBuX0CZ_FFG6IJ7Is'
 })
 
 admin.initializeApp({
@@ -36,7 +44,7 @@ app.use(cors());
 
 app.get('/api/dishtypes',authenticateUser, async (req, res) => {
     try {
-        const response = await client.getEntries({
+        const response = await cdaClient.getEntries({
             content_type: 'dishType'
         });
 
@@ -59,7 +67,7 @@ app.get('/api/dishes/:fbUserId/:dishtypeId', async (req, res) => {
     const fbUserId = req.params.fbUserId;
     const dishtypeId = req.params.dishtypeId;
     try {
-        const response = await client.getEntries({
+        const response = await cdaClient.getEntries({
             content_type:'dish',
             'fields.creator.sys.contentType.sys.id':'user',
             'fields.dishType.sys.contentType.sys.id':'dishType',
@@ -81,6 +89,42 @@ app.get('/api/dishes/:fbUserId/:dishtypeId', async (req, res) => {
         res.status(500).json({
             error:'Internal server error.'
         });
+    }
+});
+
+// Endpoint for post type
+app.post('/api/registerUser', authenticateUser, async(req, res) => {
+    try {
+        // create entry in contentful, setup env related
+        const { email, uid, username } = req.user;
+
+        const spaceId = 'xcgzqirx0bln';
+        const environmentId = 'develop';
+        const contentType = 'user';
+
+        // create userData, fields can be extracted from middleware
+        const userData = {
+            fields:{
+                email: {
+                    'en-US': email
+                },
+                username: {
+                    'en-US': username
+                },
+                fbUserId: {
+                    'en-US': uid
+                }
+            }
+        }
+        // use cmaClient to create user entry
+        const userEntry = await cmaClient.getSpace(spaceId)
+            .then(space => space.getEnvironment(environmentId))
+            .then(environment => environment.createEntry(contentType, userData));
+        
+        res.status(201).json({user: userEntry});
+    } catch (error) {
+        console.log('Error creating user', error.message);
+        res.status(500).json({ error: 'Internal server error' });
     }
 })
 

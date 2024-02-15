@@ -10,6 +10,14 @@
 				<v-img :src="titleImg" class="title-img"></v-img>
 				<v-form @submit.prevent class="form">
 					<v-text-field
+						v-model="formData.username"
+						:rules="usernameRules"
+						color="#e9983e"
+						type="username"
+						class="form-input"
+						label="Username"
+					></v-text-field>
+					<v-text-field
 						v-model="formData.email"
 						:rules="emailRules"
 						color="#e9983e"
@@ -58,6 +66,17 @@ const authStore = useAuthStore();
 const toggleForm = () => {
 	isLoginForm.value = !isLoginForm.value;
 }
+
+const usernameRules = [
+	(value) => { 
+		if(value) return true
+		return 'Username is required'
+	},
+	(value) => {
+		if(/^[a-zA-Z0-9_]{4,12}$/.test(value)) return true
+		return 'Username must be valid'
+	}
+];
 
 const emailRules = [
 	(value) => { 
