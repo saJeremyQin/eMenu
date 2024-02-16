@@ -6,6 +6,10 @@ import { createClient as createCMA } from 'contentful-management';
 import admin from 'firebase-admin';
 import serviceAccount from "../eMenuAccountKey.json";
 
+const spaceId = 'xcgzqirx0bln';
+const environmentId = 'develop';
+const cmatoken = 'CFPAT-Um3vfnH5eISh-24r-RNgbKaRcsUBuX0CZ_FFG6IJ7Is';
+
 const app = express();
 
 app.use(cors());
@@ -18,9 +22,9 @@ const cdaClient = createCDA({
 })
 
 const cmaClient = createCMA({
-    space: 'xcgzqirx0bln',
-    environment: 'develop',
-    accessToken:'CFPAT-Um3vfnH5eISh-24r-RNgbKaRcsUBuX0CZ_FFG6IJ7Is'
+    space: spaceId,
+    environment: environmentId,
+    accessToken: cmatoken
 })
 
 admin.initializeApp({
@@ -102,8 +106,8 @@ app.post('/api/registerUser', authenticateUser, async(req, res) => {
         const { username } = req.body;
         console.log(username);
 
-        const spaceId = 'xcgzqirx0bln';
-        const environmentId = 'develop';
+        // const spaceId = 'xcgzqirx0bln';
+        // const environmentId = 'develop';
         const contentType = 'user';
 
         // create userData, fields can be extracted from middleware
@@ -144,6 +148,54 @@ app.post('/api/registerUser', authenticateUser, async(req, res) => {
         res.status(201).json({user: userEntry});
     } catch (error) {
         console.log('Error creating user', error.message);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/api/createDishType', authenticateUser, async(req, res) => {
+    try {
+        // extract user info 
+        const { uid } = req.user;
+        const { dishTypeData } = req.body;
+        console.log('uid is', uid);
+        console.log('dishType data is', dishTypeData);
+        // look for the user entry
+        const userEntry = await cdaClient.getEntries({
+            content_type:'user',
+            'fields.fbUserId': uid,
+        });
+        console.log('userEntry is', userEntry);
+        console.log('username in userEntry is', userEntry.items[0].fields.username);
+        // attach the user as a reference, create dishtype 
+        const dishtype = {
+            fields: {
+                name: {
+                    'en-US': dishTypeData.name 
+                },
+                alias: {
+                    'en-US': dishTypeData.alias 
+                },
+                creator: {
+                    'en-US': {
+                        sys: {
+                            type: 'Link',
+                            linkType: 'Entry',
+                            id: userEntry.items[0].sys.id 
+                        }
+                    }
+                }
+            }
+        };
+        // create dishtype in contentful
+        const dishtypeEntry = await cmaClient.getSpace(spaceId)
+            .then(space => space.getEnvironment(environmentId))
+            .then(environment => environment.createEntry('dishType', dishtype));
+            
+        await userEntry.publish();
+        res.status(201).json({ dishtype: dishtypeEntry });
+        
+    } catch (error) {
+        console.log('Error creating dishtype:', error.message);
         res.status(500).json({ error: 'Internal server error' });
     }
 })

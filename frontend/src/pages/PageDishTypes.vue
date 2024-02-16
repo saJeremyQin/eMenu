@@ -35,7 +35,8 @@
                         <span class="label-text">DishType Name</span>
                         <v-spacer></v-spacer>
                         <v-text-field
-                          v-model="dishTypeName"
+                          v-model="dishTypeData.name"
+                          :rules="dishTypeNameRules"
                           placeholder="Input name here"
                           density="compact"
                           variant="outlined"
@@ -51,7 +52,8 @@
                         <span class="label-text">DishType Alias</span>
                         <v-spacer></v-spacer>
                         <v-text-field
-                          v-model="dishTypeAlias"
+                          v-model="dishTypeData.alias"
+                          :rules="dishTypeAliasRules"
                           placeholder="Input alias here"
                           density="compact"
                           variant="outlined"
@@ -127,16 +129,34 @@ import { ref } from 'vue';
 import { useDishTypeStore } from '@/store/DishTypeStore';
 import { onMounted } from 'vue';
 
-const dishTypeName = ref('');
-const dishTypeAlias = ref('');
+
+const dishTypeData = ref({});
 const dishTypes =  ref([]);
 
 const dialog = ref(false);
-// const dishTypes = [
-//     { id: 1, name: 'Main Course', alias: 'main' },
-//     { id: 2, name: 'Starter', alias: 'starter' },
-// ];
 const dishTypeStore = useDishTypeStore();
+
+const dishTypeNameRules = [
+	(value) => { 
+		if(value) return true
+		return 'dishType name is required'
+	},
+  (value) => {
+    if(/^[a-zA-Z0-9_\s]{2,12}$/.test(value)) return true
+    return 'dishType name must be valid'
+  }
+];
+
+const dishTypeAliasRules = [
+  (value) => { 
+		if(value) return true
+		return 'dishType alias is required'
+	},
+  (value) => {
+    if(/^[a-zA-Z0-9_\s]{2,12}$/.test(value)) return true
+    return 'dishType alias must be valid'
+  }
+]
 
 const editDishType = (item) => {
   console.log(item);
@@ -147,8 +167,7 @@ const deleteDishType = (item) => {
 }
 
 const addDishType = () => {
-  console.log(dishTypeAlias.value);
-  console.log(dishTypeName.value);
+  dishTypeStore.createDishType(dishTypeData.value);
 }
 
 const resetNewDishType = () => {
