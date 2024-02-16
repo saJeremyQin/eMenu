@@ -26,11 +26,10 @@ export const useDishTypeStore =  defineStore('dishTypeStore', {
             }
         },
         async createDishType(newDishType) {
-            console.log('DishType data is ', newDishType);
             try {
                 const response = await fetchClient.post('/api/createDishType', {dishTypeData:newDishType});
                 if(response.data) {
-                    console.log('the new dishtype is', response.data);
+                    await this.fetchDishTypes();
                 }
             } catch (error) {
                 console.error('Error creating dish type:', error);

@@ -105,7 +105,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in dishTypes"
+                v-for="item in dishTypeStore.dishTypes"
                 :key="item.id"
               >
                 <td class="cell">{{ item.name }}</td>
@@ -131,7 +131,7 @@ import { onMounted } from 'vue';
 
 
 const dishTypeData = ref({});
-const dishTypes =  ref([]);
+// const dishTypes =  ref([]);
 
 const dialog = ref(false);
 const dishTypeStore = useDishTypeStore();
@@ -166,8 +166,13 @@ const deleteDishType = (item) => {
   console.log(item);
 }
 
-const addDishType = () => {
-  dishTypeStore.createDishType(dishTypeData.value);
+const addDishType = async () => {
+  try {
+    await dishTypeStore.createDishType(dishTypeData.value);
+    dialog.value = false;
+  } catch (error) {
+    console.log(error);   
+  }
 }
 
 const resetNewDishType = () => {
@@ -175,10 +180,10 @@ const resetNewDishType = () => {
 }
 
 onMounted(async() => {
-  dishTypeStore.fetchDishTypes().then(()=> {
-    dishTypes.value = dishTypeStore.getDishTypes;
-    console.log('the value is ', dishTypes.value)
-  });
+  // dishTypeStore.fetchDishTypes().then(()=> {
+  //   dishTypes.value = dishTypeStore.getDishTypes;
+  // });
+  await dishTypeStore.fetchDishTypes();
 })
 </script>
 

@@ -191,7 +191,7 @@ app.post('/api/createDishType', authenticateUser, async(req, res) => {
             .then(space => space.getEnvironment(environmentId))
             .then(environment => environment.createEntry('dishType', dishtype));
             
-        await userEntry.publish();
+        await dishtypeEntry.publish();
         res.status(201).json({ dishtype: dishtypeEntry });
         
     } catch (error) {
