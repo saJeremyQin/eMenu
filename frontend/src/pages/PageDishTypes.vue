@@ -113,7 +113,51 @@
                 <td class="actions-td cell">
                   <div class="btn-group">
                     <v-btn density="compact" color="#429488" @click="editDishType(item)">Edit</v-btn>
-                    <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="deleteDishType(item)">Delete</v-btn>
+                    <v-dialog
+                      v-model="deleteDialog"
+                      persistent
+                      width="auto"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <!-- <v-btn
+                          color="primary"
+                          v-bind="props"
+                        >
+                          Open Dialog
+                        </v-btn> -->
+                        <v-btn 
+                          density="compact" 
+                          color="#ec6337" 
+                          v-bind="props"
+                        >
+                          Delete
+                        </v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title class="text-h5">
+                          Delete the DishType
+                        </v-card-title>
+                        <v-card-text>Are you sure to delete this dishtype?</v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="green-darken-1"
+                            variant="text"
+                            @click="deleteDishType"
+                          >
+                            Yes
+                          </v-btn>
+                          <v-btn
+                            color="green-darken-1"
+                            variant="text"
+                            @click="deleteDialog = false"
+                          >
+                            No
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                    <!-- <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="deleteDishType(item)">Delete</v-btn> -->
                   </div>
                 </td>
               </tr>
@@ -134,6 +178,7 @@ const dishTypeData = ref({});
 // const dishTypes =  ref([]);
 
 const dialog = ref(false);
+const deleteDialog = ref(false);
 const dishTypeStore = useDishTypeStore();
 
 const dishTypeNameRules = [
@@ -162,8 +207,9 @@ const editDishType = (item) => {
   console.log(item);
 }
 
-const deleteDishType = (item) => {
-  console.log(item);
+const deleteDishType = () => {
+  // console.log(item);
+  console.log('i am clicked');
 }
 
 const addDishType = async () => {
