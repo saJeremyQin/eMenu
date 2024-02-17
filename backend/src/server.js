@@ -37,7 +37,7 @@ const authenticateUser = async (req, res, next) => {
     try {
       const idToken = req.header('Authorization').replace('Bearer ', '');
       const decodedToken = await admin.auth().verifyIdToken(idToken);
-      console.log('decodedToken is ', decodedToken);
+    //   console.log('decodedToken is ', decodedToken);
       // attach userinfo to token
       req.user = decodedToken;  
       next();
@@ -49,9 +49,13 @@ const authenticateUser = async (req, res, next) => {
 
 
 app.get('/api/dishtypes',authenticateUser, async (req, res) => {
+    const { uid } = req.user;
+    
     try {
         const response = await cdaClient.getEntries({
-            content_type: 'dishType'
+            content_type: 'dishType',
+            'fields.creator.sys.contentType.sys.id':'user',
+            'fields.creator.fields.fbUserId[match]': uid,
         });
 
         // Extract the items

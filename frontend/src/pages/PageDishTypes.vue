@@ -167,6 +167,11 @@ const deleteDishType = (item) => {
 }
 
 const addDishType = async () => {
+  const {name, alias} = dishTypeData;
+  if (!name || !!alias) {
+    console.error('DishType data is empty');
+    return;
+  }
   try {
     await dishTypeStore.createDishType(dishTypeData.value);
     dialog.value = false;
