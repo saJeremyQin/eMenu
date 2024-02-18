@@ -198,8 +198,8 @@ const prepareToDelete = (item) => {
 const deleteDishType = async () => {
   // console.log(`${item.name} is to be deleted`);
   // console.log(item.id);
-  console.log(`${dishTypeToBeDeleted.name} is to be deleted`);
-  // await dishTypeStore.deleteDishType(item.id);
+  // console.log(`${dishTypeToBeDeleted.name} is to be deleted`);
+  await dishTypeStore.deleteDishType(dishTypeToBeDeleted.id);
   dishTypeToBeDeleted = null;
   deleteDialog.value = false;
 }
