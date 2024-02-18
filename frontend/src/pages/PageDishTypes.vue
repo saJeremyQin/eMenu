@@ -116,15 +116,9 @@
                     <v-dialog
                       v-model="deleteDialog"
                       persistent
-                      width="auto"
+                      width="360"
                     >
                       <template v-slot:activator="{ props }">
-                        <!-- <v-btn
-                          color="primary"
-                          v-bind="props"
-                        >
-                          Open Dialog
-                        </v-btn> -->
                         <v-btn 
                           density="compact" 
                           color="#ec6337" 
@@ -134,16 +128,13 @@
                         </v-btn>
                       </template>
                       <v-card>
-                        <v-card-title class="text-h5">
-                          Delete the DishType
-                        </v-card-title>
                         <v-card-text>Are you sure to delete this dishtype?</v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn
                             color="green-darken-1"
                             variant="text"
-                            @click="deleteDishType"
+                            @click="deleteDishType(item)"
                           >
                             Yes
                           </v-btn>
@@ -207,17 +198,14 @@ const editDishType = (item) => {
   console.log(item);
 }
 
-const deleteDishType = () => {
-  // console.log(item);
-  console.log('i am clicked');
+const deleteDishType = async (item) => {
+  console.log(`${item.name} is to be deleted`);
+  console.log(item.id);
+  await dishTypeStore.deleteDishType(item.id);
+  deleteDialog.value = false;
 }
 
 const addDishType = async () => {
-  const {name, alias} = dishTypeData;
-  if (!name || !!alias) {
-    console.error('DishType data is empty');
-    return;
-  }
   try {
     await dishTypeStore.createDishType(dishTypeData.value);
     dialog.value = false;

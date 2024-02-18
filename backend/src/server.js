@@ -204,6 +204,44 @@ app.post('/api/createDishType', authenticateUser, async(req, res) => {
     }
 })
 
+app.delete('/api/dishtypes/:id', authenticateUser, async (req, res) => {
+    try {
+        const { uid } = req.user;
+        const dishTypeId = req.params.id;
+        // check whether the dishType is created by this user
+        const response = await cdaClient.getEntries({
+            content_type: 'dishType',
+            'sys.id': dishTypeId,
+            'fields.creator.sys.contentType.sys.id': 'user',
+            'fields.creator.fields.fbUserId': uid,
+        });
+     
+        if (response.items.length > 0) {
+            // If the dishType is created by this user, delete it
+            const entry = await cmaClient.getSpace(spaceId)
+                .then(space => space.getEnvironment(environmentId))
+                .then(environment => environment.getEntry(dishTypeId));
+            
+            console.log(entry.sys.id);
+            // console.log(`${entry.fields.name} is deleted`);
+            if(entry.isPublished()) {
+                // unpublish
+                await entry.unpublish();
+            }
+
+            await entry.delete();
+
+            res.status(200).json({ message: 'DishType deleted successfully' });
+        } else {
+            // If the dishType is not created by this user, notify about the permission issue
+            res.status(403).json({ error: 'You do not have permission to delete this DishType' });
+        }                   
+    } catch (error) {
+        console.error('Error deleting dishType:', error.message);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.listen('8000', () => {
     console.log("Server is listening on Port 8000");
 })
