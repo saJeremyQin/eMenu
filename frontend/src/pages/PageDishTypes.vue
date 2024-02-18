@@ -113,42 +113,35 @@
                 <td class="actions-td cell">
                   <div class="btn-group">
                     <v-btn density="compact" color="#429488" @click="editDishType(item)">Edit</v-btn>
-                    <v-dialog
-                      v-model="deleteDialog"
-                      persistent
-                      width="360"
-                    >
-                      <template v-slot:activator="{ props }">
-                        <v-btn 
-                          density="compact" 
-                          color="#ec6337" 
-                          v-bind="props"
-                        >
-                          Delete
-                        </v-btn>
-                      </template>
-                      <v-card>
-                        <v-card-text>Are you sure to delete this dishtype?</v-card-text>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="green-darken-1"
-                            variant="text"
-                            @click="deleteDishType(item)"
-                          >
-                            Yes
-                          </v-btn>
-                          <v-btn
-                            color="green-darken-1"
-                            variant="text"
-                            @click="deleteDialog = false"
-                          >
-                            No
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                    <!-- <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="deleteDishType(item)">Delete</v-btn> -->
+                    <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="prepareToDelete(item)">
+                      Delete
+                      <v-dialog
+                        v-model="deleteDialog"
+                        persistent
+                        width="360"
+                      >  
+                        <v-card>
+                          <v-card-text>Are you sure to delete this dishtype?</v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="green-darken-1"
+                              variant="text"
+                              @click="deleteDishType"
+                            >
+                              Yes
+                            </v-btn>
+                            <v-btn
+                              color="green-darken-1"
+                              variant="text"
+                              @click="cancelDeleteDishType"
+                            >
+                              No
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-btn>
                   </div>
                 </td>
               </tr>
@@ -166,8 +159,7 @@ import { onMounted } from 'vue';
 
 
 const dishTypeData = ref({});
-// const dishTypes =  ref([]);
-
+let dishTypeToBeDeleted = null;
 const dialog = ref(false);
 const deleteDialog = ref(false);
 const dishTypeStore = useDishTypeStore();
@@ -198,10 +190,22 @@ const editDishType = (item) => {
   console.log(item);
 }
 
-const deleteDishType = async (item) => {
-  console.log(`${item.name} is to be deleted`);
-  console.log(item.id);
-  await dishTypeStore.deleteDishType(item.id);
+const prepareToDelete = (item) => {
+  dishTypeToBeDeleted = item;
+  deleteDialog.value = true;
+}
+
+const deleteDishType = async () => {
+  // console.log(`${item.name} is to be deleted`);
+  // console.log(item.id);
+  console.log(`${dishTypeToBeDeleted.name} is to be deleted`);
+  // await dishTypeStore.deleteDishType(item.id);
+  dishTypeToBeDeleted = null;
+  deleteDialog.value = false;
+}
+
+const cancelDeleteDishType = () => {
+  dishTypeToBeDeleted = null;
   deleteDialog.value = false;
 }
 
