@@ -77,9 +77,9 @@
                 <v-btn
                   color="blue-darken-1"
                   variant="text"
-                  @click="resetNewDishType"
+                  @click="dialog=false"
                 >
-                  Reset
+                  Close
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -218,9 +218,6 @@ const addDishType = async () => {
   }
 }
 
-const resetNewDishType = () => {
-
-}
 
 onMounted(async() => {
   // dishTypeStore.fetchDishTypes().then(()=> {
