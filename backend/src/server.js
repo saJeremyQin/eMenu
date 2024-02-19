@@ -73,34 +73,6 @@ app.get('/api/dishtypes',authenticateUser, async (req, res) => {
     }
 })
 
-app.get('/api/dishes/:fbUserId/:dishtypeId', async (req, res) => {
-    const fbUserId = req.params.fbUserId;
-    const dishtypeId = req.params.dishtypeId;
-    try {
-        const response = await cdaClient.getEntries({
-            content_type:'dish',
-            'fields.creator.sys.contentType.sys.id':'user',
-            'fields.dishType.sys.contentType.sys.id':'dishType',
-            'fields.creator.fields.fbUserId[match]': fbUserId,
-            'fields.dishType.sys.id':dishtypeId,
-        });
-        const dishes = response.items.map(item => (
-            {
-                id: item.sys.id,
-                name: item.fields.name,
-                description: item.fields.description,
-                price: item.fields.price,
-                image: item.fields.image,
-            }
-        ));
-        res.send(dishes);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({
-            error:'Internal server error.'
-        });
-    }
-});
 
 // Endpoint for post type
 app.post('/api/registerUser', authenticateUser, async(req, res) => {
@@ -238,6 +210,49 @@ app.delete('/api/dishtypes/:id', authenticateUser, async (req, res) => {
         }                   
     } catch (error) {
         console.error('Error deleting dishType:', error.message);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.put('/api/dishtype/:id', authenticateUser, async (req, res) => {
+    console.log('i am here');
+    const {dishTypeData} = req.body;
+    console.log('put dishtypedata is', dishTypeData);
+    const { uid } = req.user;
+    const dishTypeId = req.params.id;
+
+    try {
+        // check whether the dishType is created by this user
+        const response = await cdaClient.getEntries({
+            content_type: 'dishType',
+            'sys.id': dishTypeId,
+            'fields.creator.sys.contentType.sys.id': 'user',
+            'fields.creator.fields.fbUserId': uid,
+        });
+        if (response.items.length > 0) {
+            //make changes to current resource
+            const dishTypeEntry = await cmaClient.getSpace(spaceId)
+            .then(space => space.getEnvironment(environmentId))
+            .then(environment => environment.getEntry(dishTypeId))
+            .then((entry) => {
+                // update the resource
+                entry.fields.name =  {
+                    'en-US': dishTypeData.name
+                };
+                entry.fields.alias = {
+                    'en-US': dishTypeData.alias
+                }
+                return entry.update();
+            });
+
+            await dishTypeEntry.publish();
+            console.log(`entry ${dishTypeEntry.sys.id} is updated`);
+            res.status(200).json({ message: 'DishType updated successfully' });       
+        } else {
+            res.status(404).json({ error: 'DishType not found' });
+        }   
+    } catch (error) {
+        console.error('Error editing dishType:', error.message);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

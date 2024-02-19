@@ -42,9 +42,14 @@ export const useDishTypeStore =  defineStore('dishTypeStore', {
             await fetchClient.delete(`/api/dishtypes/${id}`);
             await this.fetchDishTypes();         
         },
-        async editDishType(id) {
+        async editDishType(id, newDishtypeData) {
             // edit dishType name or alias
-            console.log(id);
+            // console.log(id);
+            console.log(`dishtypeData is`, newDishtypeData);
+            await fetchClient.put(`/api/dishtype/${id}`, {
+                dishTypeData: newDishtypeData
+            });
+            await this.fetchDishTypes();         
         }
     }
 })

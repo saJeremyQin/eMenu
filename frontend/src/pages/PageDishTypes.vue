@@ -112,7 +112,80 @@
                 <td class="cell">{{ item.alias }}</td>
                 <td class="actions-td cell">
                   <div class="btn-group">
-                    <v-btn density="compact" color="#429488" @click="editDishType(item)">Edit</v-btn>
+                    <v-btn density="compact" color="#429488" @click="prepareToEdit(item)">
+                      Edit
+                      <v-dialog
+                        v-model="editDialog"
+                        persistent
+                        width="600"
+                        height="330"
+                      >  
+                        <v-card>
+                          <v-card-title class="dialog-title">
+                            Edit DishType
+                            <v-spacer></v-spacer>
+                            <v-btn class="close-btn" variant="plain" icon @click="editDialog = false">
+                              <v-icon class="close-icon">mdi-close</v-icon>
+                            </v-btn>
+                          </v-card-title>
+                          <v-card-text>
+                            <v-container>
+                              <v-row>
+                                <v-col>
+                                  <div class="input-row">
+                                    <span class="label-text">DishType Name</span>
+                                    <v-spacer></v-spacer>
+                                    <v-text-field
+                                      v-model="dishTypeData.name"
+                                      :rules="dishTypeNameRules"
+                                      placeholder="dishTypeData.name"
+                                      density="compact"
+                                      variant="outlined"
+                                      required
+                                      class="text-field"
+                                    ></v-text-field>
+                                  </div>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <v-col>
+                                  <div class="input-row">
+                                    <span class="label-text">DishType Alias</span>
+                                    <v-spacer></v-spacer>
+                                    <v-text-field
+                                      v-model="dishTypeData.alias"
+                                      :rules="dishTypeAliasRules"
+                                      placeholder="Input alias here"
+                                      density="compact"
+                                      variant="outlined"
+                                      required
+                                      class="text-field"
+                                    ></v-text-field>
+                                  </div>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue-darken-1"
+                              variant="text"
+                              @click="editDishType"
+                            >
+                              Verify
+                            </v-btn>
+                            <v-btn
+                              color="blue-darken-1"
+                              variant="text"
+                              @click="editdialog=false"
+                            >
+                              Close
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-btn>
                     <v-btn density="compact" color="#ec6337" style="margin-left: 8px;" @click="prepareToDelete(item)">
                       Delete
                       <v-dialog
@@ -160,8 +233,10 @@ import { onMounted } from 'vue';
 
 const dishTypeData = ref({});
 let dishTypeToBeDeleted = null;
+let dishTypeToBeEdited = null;
 const dialog = ref(false);
 const deleteDialog = ref(false);
+const editDialog = ref(false);
 const dishTypeStore = useDishTypeStore();
 
 const dishTypeNameRules = [
@@ -186,19 +261,28 @@ const dishTypeAliasRules = [
   }
 ]
 
-const editDishType = (item) => {
-  console.log(item);
+const prepareToEdit = (item) => {
+  dishTypeToBeEdited = item;
+  dishTypeData.value.name = item.name;
+  dishTypeData.value.alias = item.alias;
+  editDialog.value = true;
 }
-
 const prepareToDelete = (item) => {
   dishTypeToBeDeleted = item;
   deleteDialog.value = true;
 }
 
+const editDishType = async () => {
+  // console.log(item);
+  // console.log(dishTypeToBeEdited);
+  console.log(dishTypeData.value);
+  console.log(dishTypeToBeEdited.id);
+  await dishTypeStore.editDishType(dishTypeToBeEdited.id, dishTypeData.value);
+  dishTypeToBeEdited = null;
+  editDialog.value = false;
+}
+
 const deleteDishType = async () => {
-  // console.log(`${item.name} is to be deleted`);
-  // console.log(item.id);
-  // console.log(`${dishTypeToBeDeleted.name} is to be deleted`);
   await dishTypeStore.deleteDishType(dishTypeToBeDeleted.id);
   dishTypeToBeDeleted = null;
   deleteDialog.value = false;
