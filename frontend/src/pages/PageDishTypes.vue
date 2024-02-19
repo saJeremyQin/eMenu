@@ -138,7 +138,7 @@
                                     <v-text-field
                                       v-model="dishTypeData.name"
                                       :rules="dishTypeNameRules"
-                                      placeholder="dishTypeData.name"
+                                      placeholder="Input name here"
                                       density="compact"
                                       variant="outlined"
                                       required
@@ -173,12 +173,12 @@
                               variant="text"
                               @click="editDishType"
                             >
-                              Verify
+                              Submit
                             </v-btn>
                             <v-btn
                               color="blue-darken-1"
                               variant="text"
-                              @click="editdialog=false"
+                              @click="cancelEditDishType"
                             >
                               Close
                             </v-btn>
@@ -282,6 +282,10 @@ const editDishType = async () => {
   editDialog.value = false;
 }
 
+const cancelEditDishType = () => {
+  dishTypeToBeEdited = null;
+  editDialog.value = false;
+}
 const deleteDishType = async () => {
   await dishTypeStore.deleteDishType(dishTypeToBeDeleted.id);
   dishTypeToBeDeleted = null;
