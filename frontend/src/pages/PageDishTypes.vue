@@ -5,85 +5,80 @@
           <v-card-title>
             Dish Types
           </v-card-title>
-          <v-dialog
-            v-model="dialog"
-            persistent
-            width="600"
-            height="330"
-          >
-            <template v-slot:activator="{ props }">
-              <v-btn
-                color="#4c9df8"
-                v-bind="props"
-              >
-                Add DishType
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title class="dialog-title">
-                Add DishType
-                <v-spacer></v-spacer>
-                <v-btn class="close-btn" variant="plain" icon @click="dialog = false">
-                  <v-icon class="close-icon">mdi-close</v-icon>
-                </v-btn>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col>
-                      <div class="input-row">
-                        <span class="label-text">DishType Name</span>
-                        <v-spacer></v-spacer>
-                        <v-text-field
-                          v-model="dishTypeData.name"
-                          :rules="dishTypeNameRules"
-                          placeholder="Input name here"
-                          density="compact"
-                          variant="outlined"
-                          required
-                          class="text-field"
-                        ></v-text-field>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col>
-                      <div class="input-row">
-                        <span class="label-text">DishType Alias</span>
-                        <v-spacer></v-spacer>
-                        <v-text-field
-                          v-model="dishTypeData.alias"
-                          :rules="dishTypeAliasRules"
-                          placeholder="Input alias here"
-                          density="compact"
-                          variant="outlined"
-                          required
-                          class="text-field"
-                        ></v-text-field>
-                      </div>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="addDishType"
-                >
-                  Add
-                </v-btn>
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="dialog=false"
-                >
-                  Close
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <v-btn density="compact" color="#4c9df8" @click="addDialog=true">
+            Add DishType
+            <v-dialog
+              v-model="addDialog"
+              persistent
+              width="600"
+              height="330"
+            >  
+              <v-card>
+                <v-card-title class="dialog-title">
+                  Add DishType
+                  <v-spacer></v-spacer>
+                  <v-btn class="close-btn" variant="plain" icon @click="addDialog = false">
+                    <v-icon class="close-icon">mdi-close</v-icon>
+                  </v-btn>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col>
+                        <div class="input-row">
+                          <span class="label-text">DishType Name</span>
+                          <v-spacer></v-spacer>
+                          <v-text-field
+                            v-model="dishTypeData.name"
+                            :rules="dishTypeNameRules"
+                            placeholder="Input name here"
+                            density="compact"
+                            variant="outlined"
+                            required
+                            class="text-field"
+                          ></v-text-field>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <div class="input-row">
+                          <span class="label-text">DishType Alias</span>
+                          <v-spacer></v-spacer>
+                          <v-text-field
+                            v-model="dishTypeData.alias"
+                            :rules="dishTypeAliasRules"
+                            placeholder="Input alias here"
+                            density="compact"
+                            variant="outlined"
+                            required
+                            class="text-field"
+                          ></v-text-field>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="blue-darken-1"
+                    variant="text"
+                    @click="addDishType"
+                  >
+                    Submit
+                  </v-btn>
+                  <v-btn
+                    color="blue-darken-1"
+                    variant="text"
+                    @click="cancelAddDishType"
+                  >
+                    Close
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-btn>
         </div>
     
         <v-divider class="divider"></v-divider>
@@ -234,7 +229,7 @@ import { onMounted } from 'vue';
 const dishTypeData = ref({});
 let dishTypeToBeDeleted = null;
 let dishTypeToBeEdited = null;
-const dialog = ref(false);
+const addDialog = ref(false);
 const deleteDialog = ref(false);
 const editDialog = ref(false);
 const dishTypeStore = useDishTypeStore();
@@ -259,7 +254,13 @@ const dishTypeAliasRules = [
     if(/^[a-zA-Z0-9_\s]{2,12}$/.test(value)) return true
     return 'dishType alias must be valid'
   }
-]
+];
+
+const cancelAddDishType = () => {
+  addDialog.value = false;
+  dishTypeData.value.name=null;
+  dishTypeData.value.alias=null;
+}
 
 const prepareToEdit = (item) => {
   dishTypeToBeEdited = item;
@@ -284,6 +285,8 @@ const editDishType = async () => {
 
 const cancelEditDishType = () => {
   dishTypeToBeEdited = null;
+  dishTypeData.value.name=null;
+  dishTypeData.value.alias=null;
   editDialog.value = false;
 }
 const deleteDishType = async () => {
@@ -300,7 +303,7 @@ const cancelDeleteDishType = () => {
 const addDishType = async () => {
   try {
     await dishTypeStore.createDishType(dishTypeData.value);
-    dialog.value = false;
+    addDialog.value = false;
   } catch (error) {
     console.log(error);   
   }
