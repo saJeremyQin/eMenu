@@ -29,8 +29,8 @@ export const useDishTypeStore =  defineStore('dishTypeStore', {
             try {
                 const response = await fetchClient.post('/api/createDishType', {dishTypeData:newDishType});
                 if(response.data) {
+                    console.log(`The created dishtype name is`, response.data);
                     await this.fetchDishTypes();
-                    // console.log('dishTypesList is', this.dishTypes);
                 }
             } catch (error) {
                 console.error('Error creating dish type:', error);
