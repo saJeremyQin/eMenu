@@ -215,11 +215,11 @@ app.delete('/api/dishtypes/:id', authenticateUser, async (req, res) => {
 });
 
 app.put('/api/dishtype/:id', authenticateUser, async (req, res) => {
-    console.log('i am here');
     const {dishTypeData} = req.body;
     console.log('put dishtypedata is', dishTypeData);
     const { uid } = req.user;
     const dishTypeId = req.params.id;
+    console.log('id is', req.params.id);
 
     try {
         // check whether the dishType is created by this user
