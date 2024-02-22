@@ -57,7 +57,7 @@ export const useAuthStore = defineStore('authstore',{
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
                 // await updateProfile(auth.currentUser, {displayName:username});
-                await fetchClient.post('/api/registerUser', {
+                await fetchClient.post('/api/users/register', {
                     username
                 });
             } catch (error) {
