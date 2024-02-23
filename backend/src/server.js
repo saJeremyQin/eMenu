@@ -1,6 +1,6 @@
 import express from "express";
 import cors from 'cors';
-import authenticateUser from "./authMiddleWare";
+import authenticateUser from "./authMiddleware";
 import userRoutes from './routes/userRoutes';
 import dishtypeRoutes from './routes/dishtypeRoutes';
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticateUser } from "../authMiddleWare";
+import { authenticateUser } from "../authMiddleware";
 import { cdaClient, cmaClient } from "../contentfulClient";
 
 const router = express.Router();
