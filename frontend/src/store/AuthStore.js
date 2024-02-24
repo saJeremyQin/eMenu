@@ -3,11 +3,18 @@ import auth from "@/firebase";
 import router from "@/router";
 import { 
     createUserWithEmailAndPassword, 
+    sendEmailVerification, 
     signInWithEmailAndPassword, 
     signOut, 
     // updateProfile
 } from 'firebase/auth';
 import fetchClient from "@/utils/fetchClient";
+
+
+const actionCodeSettings = {
+    url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
+    handleCodeInApp: true,
+};
 
 export const useAuthStore = defineStore('authstore',{
     state: () => ({
@@ -55,8 +62,12 @@ export const useAuthStore = defineStore('authstore',{
             const { email, username, password } = details;
             console.log(`email is ${email}, password is ${password}, username is ${username}`);
             try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                // await updateProfile(auth.currentUser, {displayName:username});
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log('user is', user);
+
+                sendEmailVerification(user, actionCodeSettings);
+
                 await fetchClient.post('/api/users/register', {
                     username
                 });
@@ -80,9 +91,9 @@ export const useAuthStore = defineStore('authstore',{
                 return ;
             }
             // this.setUser(auth.currentUser);
-            router.push({
-                path:'/home'     
-            });
+            // router.push({
+            //     path:'/home'     
+            // });
         },
         async logout() {
             try {
