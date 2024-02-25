@@ -66,11 +66,12 @@ export const useAuthStore = defineStore('authstore',{
                 const user = userCredential.user;
                 console.log('user is', user);
 
-                sendEmailVerification(user, actionCodeSettings);
+                await sendEmailVerification(user, actionCodeSettings);
+                alert('Verification email sent successfully!');
 
-                await fetchClient.post('/api/users/register', {
-                    username
-                });
+                // await fetchClient.post('/api/users/register', {
+                //     username
+                // });
             } catch (error) {
                 switch(error.code) {
                     case 'auth/email-already-in-use':
