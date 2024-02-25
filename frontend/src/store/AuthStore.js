@@ -8,7 +8,7 @@ import {
     signOut, 
     // updateProfile
 } from 'firebase/auth';
-import fetchClient from "@/utils/fetchClient";
+// import fetchClient from "@/utils/fetchClient";
 
 
 const actionCodeSettings = {

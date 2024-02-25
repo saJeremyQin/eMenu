@@ -4,6 +4,7 @@ import PageHome from '../pages/PageHome.vue';
 import PageAbout from '../pages/PageAbout.vue';
 import PageDishTypes from '../pages/PageDishTypes.vue';
 import PageNotFound from '../pages/PageNotFound.vue';
+import PageVerifyEmail from '../pages/PageVerifyEmail';
 import LayoutStandard from '../layout/LayoutStandard.vue';
 import LayoutLogin from '../layout/LayoutLogin.vue';
 import auth from "@/firebase";
@@ -54,9 +55,21 @@ const routes = [
     },
   },
   {
+    path: '/verifyemail',
+    name:'VerifyEmail',
+    meta:{
+      layout: LayoutLogin,
+      requiresAuth: true
+    },
+    components: {
+      default: PageVerifyEmail
+    },
+  },
+  {
     path: '/',
     redirect: '/home',
   },
+ 
   { path: '/:pathMatch(.*)*', component: PageNotFound },
 ];
 
@@ -67,22 +80,27 @@ const router = createRouter({
 
 router.beforeEach(async (to,from,next) => {
   // Wait for the authentication state to be resolved
-  await new Promise(resolve => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      console.log(user);
-      unsubscribe(); // Unsubscribe once the state is resolved
-      resolve();     // Resolve the promise
-    });
-  });
-  if(to.path === '/login' && auth.currentUser) {
-    console.log('come here when i am about?');
-    next('/home')
-    return
+  // await new Promise(resolve => {
+  //   const unsubscribe = auth.onAuthStateChanged(user => {
+  //     console.log(user);
+  //     unsubscribe(); // Unsubscribe once the state is resolved
+  //     resolve();     // Resolve the promise
+  //   });
+  // });
+  // if(to.path === '/login' && auth.currentUser) {
+  //   console.log('come here when i am about?');
+  //   next('/home')
+  //   return
+  // }
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isVerifyEmailPage = to.path === '/verifyemail';
+
+  if(requiresAuth && !auth.currentUser) {
+    next('/login');
+  } else if(requiresAuth && auth.currentUser && !auth.currentUser.emailVerified && !isVerifyEmailPage) {
+    next('/verifyemail');
+  } else {
+    next();
   }
-  if(to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
-    next('/login')
-    return
-  }
-  next()
 })
 export default router;
