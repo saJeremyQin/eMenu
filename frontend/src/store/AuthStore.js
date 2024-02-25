@@ -64,11 +64,16 @@ export const useAuthStore = defineStore('authstore',{
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-                console.log('user is', user);
-
-                await sendEmailVerification(user, actionCodeSettings);
-                alert('Verification email sent successfully!');
-
+   
+                try {
+                    await sendEmailVerification(user, actionCodeSettings);
+                    // use snack to replace alert later
+                    alert('Verification email sent successfully!');
+                } catch (verificationError) {
+                    console.error('Error sending verification email:', verificationError);
+                    alert('Error sending verification email');
+                    return;
+                }
                 // await fetchClient.post('/api/users/register', {
                 //     username
                 // });
