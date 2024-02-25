@@ -9,6 +9,7 @@ import {
     // updateProfile
 } from 'firebase/auth';
 // import fetchClient from "@/utils/fetchClient";
+import eventBus from "@/utils/eventBus";
 
 
 const actionCodeSettings = {
@@ -68,7 +69,9 @@ export const useAuthStore = defineStore('authstore',{
                 try {
                     await sendEmailVerification(user, actionCodeSettings);
                     // use snack to replace alert later
-                    alert('Verification email sent successfully!');
+                    // alert('Verification email sent successfully!');
+                    const messageText='Verification email sent successfully!';
+                    eventBus.emit('verification-email-sent', messageText);
                 } catch (verificationError) {
                     console.error('Error sending verification email:', verificationError);
                     alert('Error sending verification email');
