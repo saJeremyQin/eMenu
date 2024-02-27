@@ -81,10 +81,10 @@ router.post('/create', async(req, res) => {
 
 router.put('/update/:id', async (req, res) => {
     const {dishTypeData} = req.body;
-    console.log('put dishtypedata is', dishTypeData);
+    // console.log('put dishtypedata is', dishTypeData);
     const { uid } = req.user;
     const dishTypeId = req.params.id;
-    console.log('id is', req.params.id);
+    // console.log('id is', req.params.id);
 
     try {
         // check whether the dishType is created by this user

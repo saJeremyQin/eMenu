@@ -8,7 +8,7 @@ import {
     signOut, 
     // updateProfile
 } from 'firebase/auth';
-// import fetchClient from "@/utils/fetchClient";
+import fetchClient from "@/utils/fetchClient";
 import eventBus from "@/utils/eventBus";
 
 
@@ -19,7 +19,8 @@ const actionCodeSettings = {
 
 export const useAuthStore = defineStore('authstore',{
     state: () => ({
-        user: null
+        user: null,
+        contentfulVerified: false,
     }),
     getters:  {
         getUser: (state) => {
@@ -29,6 +30,9 @@ export const useAuthStore = defineStore('authstore',{
     actions: {
         setUser(user) {
             this.$state.user = user;
+        },
+        setContentfulVerified(currentState) {
+            this.$state.contentfulVerified=currentState;
         },
         clearUser() {
             this.$state.user = null;
@@ -68,8 +72,10 @@ export const useAuthStore = defineStore('authstore',{
    
                 try {
                     await sendEmailVerification(user, actionCodeSettings);
+                    await fetchClient.post('/api/users/register', {
+                        username
+                    });
                     // use snack to replace alert later
-                    // alert('Verification email sent successfully!');
                     const messageText='Verification email sent successfully!';
                     eventBus.emit('verification-email-sent', messageText);
                 } catch (verificationError) {
@@ -77,10 +83,20 @@ export const useAuthStore = defineStore('authstore',{
                     alert('Error sending verification email');
                     return;
                 }
-                // await fetchClient.post('/api/users/register', {
-                //     username
-                // });
             } catch (error) {
+                console.error('Error creating user:', error);
+                /* To be added
+                 "status": 422,
+                "statusText": "Unprocessable Entity",
+                "message": "Validation error",
+                "details": {
+                    "errors": [
+                    {
+                        "name": "unique",
+                        ...
+                    }
+                }
+                */
                 switch(error.code) {
                     case 'auth/email-already-in-use':
                       alert("Email already in use")
@@ -95,7 +111,7 @@ export const useAuthStore = defineStore('authstore',{
                       alert("Weak password")
                       break
                     default:
-                      alert("Something went wrong")
+                      alert("Something went wrong:" +error.message)
                 }
                 return ;
             }
