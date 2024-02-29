@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 // import serviceAccount from "../eMenuAccountKey.json";
 
 let firebaseKey;
-if(process.env.CD) {
+if(process.env.PRIVATE_KEY_ID) {
   firebaseKey = {
     "private_key_id": process.env.PRIVATE_KEY_ID,
     "private_key": process.env.PRIVATE_KEY.replace(/\\n/gm, "\n"),

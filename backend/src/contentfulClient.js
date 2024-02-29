@@ -2,7 +2,7 @@ import { createClient as createCDA } from 'contentful';
 import { createClient as createCMA } from 'contentful-management';
 import dotenv from 'dotenv';
 
-const isCodespace = !!process.env.CD;
+const isCodespace = !!process.env.PRIVATE_KEY_ID;
 
 // if it is local, config dotenv
 if(!isCodespace) {
