@@ -2,10 +2,14 @@ import { createClient as createCDA } from 'contentful';
 import { createClient as createCMA } from 'contentful-management';
 import dotenv from 'dotenv';
 
-const result = dotenv.config();
+const isCodespace = !!process.env.CD;
 
-if (result.error) {
-  throw result.error;
+// if it is local, config dotenv
+if(!isCodespace) {
+  const result = dotenv.config();
+  if (result.error) {
+    throw result.error;
+  }
 }
 
 export const spaceId = 'xcgzqirx0bln';
