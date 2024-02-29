@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDU6dBm1Gucaaint0ZBM-52y_YeAQgJSlw",
+  apiKey: process.env.VUE_APP_API_KEY,
   authDomain: "emenu-41e86.firebaseapp.com",
   projectId: "emenu-41e86",
   storageBucket: "emenu-41e86.appspot.com",
