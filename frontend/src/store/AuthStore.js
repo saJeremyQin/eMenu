@@ -15,7 +15,8 @@ import eventBus from "@/utils/eventBus";
 
 
 const actionCodeSettings = {
-    url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
+    // url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
+    url:'https://emenu-el2v.onrender.com/home',
     handleCodeInApp: true,
 };
 
@@ -45,6 +46,7 @@ export const useAuthStore = defineStore('authstore',{
                 console.log(`email is ${email} and password is ${password}`);
                 await signInWithEmailAndPassword(auth, email, password);
                 const authToken = await auth.currentUser?.getIdToken();
+                console.log('the authToken is ', authToken);
                 if(authToken) {
                     fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
                 }
