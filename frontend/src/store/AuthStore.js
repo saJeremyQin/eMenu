@@ -43,7 +43,11 @@ export const useAuthStore = defineStore('authstore',{
             const { email, password } = details;
             try {
                 console.log(`email is ${email} and password is ${password}`);
-                await signInWithEmailAndPassword(auth, email, password)
+                await signInWithEmailAndPassword(auth, email, password);
+                const authToken = await auth.currentUser?.getIdToken();
+                if(authToken) {
+                    fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
+                }
             } catch (error) {
                 console.log('errow with code of',error.code);
 
