@@ -163,8 +163,8 @@ const register = () => {
 }
 
 .submit-btn {
-	width: 100%;
-	height: 100%;
+	// width: 100%;
+	// height: 100%;
 	padding-top: 13px;
 	padding-bottom: 13px;
 	border-radius: 30px;
