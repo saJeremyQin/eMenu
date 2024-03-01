@@ -21,7 +21,11 @@ admin.initializeApp({
 
 const authenticateUser = async (req, res, next) => {
     try {
-      const idToken = req.header('Authorization').replace('Bearer ', '');
+      const authHeader = req.header('Authorization');
+      if(!authHeader) {
+        throw new Error('Authorization header is missing');
+      }
+      const idToken = authHeader.replace('Bearer ', '');
       const decodedToken = await admin.auth().verifyIdToken(idToken);
       req.user = decodedToken;  
       next();
