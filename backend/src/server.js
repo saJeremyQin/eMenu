@@ -15,6 +15,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// use CORS
 app.use(cors());
 app.use(express.static(path.resolve(__dirname,"../dist"),{ maxAge:"1y", etag:false}));
 
