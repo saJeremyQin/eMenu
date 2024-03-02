@@ -15,7 +15,8 @@ import eventBus from "@/utils/eventBus";
 
 
 const actionCodeSettings = {
-    url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
+    // url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
+    url:'https://admin.emenu.au/home',
     handleCodeInApp: true,
 };
 

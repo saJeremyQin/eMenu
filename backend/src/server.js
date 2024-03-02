@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import path from 'path';
 import authenticateUser from "./authMiddleware";
 import userRoutes from './routes/userRoutes';
 import dishtypeRoutes from './routes/dishtypeRoutes';
@@ -7,18 +8,32 @@ import dishtypeRoutes from './routes/dishtypeRoutes';
 const app = express();
 
 const corsOptions = {
-    origin: ['https://emenu-el2v.onrender.com', 'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  };
+  origin: [
+    'https://emenu-el2v.onrender.com', 
+    'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev',
+    'https://admin.emenu.au'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
 app.use(cors(corsOptions));
+
+app.use(express.static(
+	path.resolve(__dirname,"../dist"),
+	{ maxAge:"1y", etag:false}
+));
+
 app.use(express.json());
 app.use(authenticateUser);
 
 app.use('/api/users', userRoutes); // Mounting user routes
 app.use('/api/dishtypes', dishtypeRoutes);
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "../dist/index.html"));
+})
 
-app.listen('8000', () => {
-    console.log("Server is listening on Port 8000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+	console.log('Server is runingin on '+port);
 })
