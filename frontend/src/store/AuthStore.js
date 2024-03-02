@@ -43,13 +43,13 @@ export const useAuthStore = defineStore('authstore',{
         async login(details) {
             const { email, password } = details;
             try {
-                console.log(`email is ${email} and password is ${password}`);
+                // console.log(`email is ${email} and password is ${password}`);
                 await signInWithEmailAndPassword(auth, email, password);
-                const authToken = await auth.currentUser?.getIdToken();
-                console.log('the authToken is ', authToken);
-                if(authToken) {
-                    fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
-                }
+                // const authToken = await auth.currentUser?.getIdToken();
+                // console.log('the authToken is ', authToken);
+                // if(authToken) {
+                //     fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
+                // }
             } catch (error) {
                 console.log('errow with code of',error.code);
 
