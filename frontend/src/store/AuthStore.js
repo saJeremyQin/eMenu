@@ -45,12 +45,12 @@ export const useAuthStore = defineStore('authstore',{
                 // console.log(`email is ${email} and password is ${password}`);
                 await signInWithEmailAndPassword(auth, email, password);
 
-                const authToken = await auth.currentUser.getIdToken();
-                console.log('authToken is ', authToken);
+                // const authToken = await auth.currentUser.getIdToken();
+                // console.log('authToken is ', authToken);
 
-                if(authToken) {
-                    fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
-                }
+                // if(authToken) {
+                //     fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
+                // }
             } catch (error) {
                 console.log('errow with code of',error.code);
 
