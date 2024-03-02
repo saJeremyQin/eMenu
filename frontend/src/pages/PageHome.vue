@@ -15,7 +15,8 @@ const userFireBaseState = ref();
 const userStore = useAuthStore();
 onMounted(async () => {
   userFireBaseState.value = auth.currentUser.emailVerified;
-  if(userFireBaseState.value !== userStore.contentfulVerified) {
+  if(auth.currentUser.emailVerified !== userStore.contentfulVerified) {
+    console.log('emailVerified is ', auth.currentUser.emailVerified);
     await fetchClient.put('/api/users/updateVerified', {
       verified: userFireBaseState.value,
     });
