@@ -29,9 +29,9 @@ app.use(authenticateUser);
 
 app.use('/api/users', userRoutes); // Mounting user routes
 app.use('/api/dishtypes', dishtypeRoutes);
-app.get("*", (req, res) => {
-	res.sendFile(path.join(__dirname, "../dist/index.html"));
-})
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/index.html"));
+  })
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
