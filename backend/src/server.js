@@ -9,7 +9,7 @@ const app = express();
 
 // set CORS
 const corsOptions = {
-  origin: ['https://emenu-el2v.onrender.com', 'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/'],
+  origin: ['https://emenu-k5k7.onrender.com', 'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
