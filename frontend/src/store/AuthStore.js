@@ -79,7 +79,7 @@ export const useAuthStore = defineStore('authstore',{
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 // const authToken = await user.getIdToken();
-                
+
                 this.setUser(user);
                 // urlWithToken = `${continueUrl}?authToken=${user.getIdToken()}`;
                 // console.log('urlWithToken is', urlWithToken);
@@ -153,9 +153,12 @@ export const useAuthStore = defineStore('authstore',{
                 if (user === null) {
                     // console.log('User is null, clearing user...');
                     this.clearUser();
+                    localStorage.removeItem('token');
                 } else {
                     // console.log('User is not null, setting user:', user);
                     this.setUser(user);
+                    const authToken = await user.getIdToken();
+                    localStorage.setItem('token', authToken);
                     if (router.isReady() && router.currentRoute.value.path === '/login') {
                         router.push('/home')
                     }
