@@ -17,6 +17,7 @@ onMounted(async () => {
   userFireBaseState.value = auth.currentUser.emailVerified;
   if(auth.currentUser.emailVerified !== userStore.contentfulVerified) {
     console.log('emailVerified is ', auth.currentUser.emailVerified);
+
     await fetchClient.put('/api/users/updateVerified', {
       verified: userFireBaseState.value,
     });

@@ -55,7 +55,7 @@ router.post('/register', async(req, res) => {
 
         await userEntry.publish();
         console.log(userEntry);
-        res.status(201).json({user: userEntry});
+        res.status(201).json({user: userEntry.fields.email});
     } catch (error) {
         console.log('Error creating user', error.message);
         res.status(500).json({ error: 'Internal server error' });

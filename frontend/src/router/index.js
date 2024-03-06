@@ -96,8 +96,10 @@ router.beforeEach(async (to,from,next) => {
   const isVerifyEmailPage = to.path === '/verifyemail';
 
   if(requiresAuth && !auth.currentUser) {
+    console.log('No currentUser');
     next('/login');
   } else if(requiresAuth && auth.currentUser && !auth.currentUser.emailVerified && !isVerifyEmailPage) {
+    console.log('will go to verifyemail page');
     next('/verifyemail');
   } else {
     next();

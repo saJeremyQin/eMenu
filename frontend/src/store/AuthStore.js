@@ -80,9 +80,10 @@ export const useAuthStore = defineStore('authstore',{
    
                 try {
                     await sendEmailVerification(user, actionCodeSettings);
-                    await fetchClient.post('/api/users/register', {
+                    const userEmail = await fetchClient.post('/api/users/register', {
                         username
                     });
+                    console.log('the user has successfully registered with email '+userEmail);
                     // use snack to replace alert later
                     const messageText='Verification email sent successfully!';
                     eventBus.emit('verification-email-sent', messageText);
