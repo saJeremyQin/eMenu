@@ -18,8 +18,9 @@ onMounted(async () => {
   userFireBaseState.value = auth.currentUser.emailVerified;
   if(auth.currentUser.emailVerified !== userStore.contentfulVerified) {
     // console.log('emailVerified is ', auth.currentUser.emailVerified);
-    const authToken = userStore.user.idToken();
+    const authToken = userStore.user?.idToken();
     console.log('authToken in pageLogin is', authToken);
+
     fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
 
     await fetchClient.put('/api/users/updateVerified', {
