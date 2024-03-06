@@ -78,9 +78,11 @@ export const useAuthStore = defineStore('authstore',{
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-                // const authToken = await user.getIdToken();
+                const authToken = await user.getIdToken();
 
-                this.setUser(user);
+                localStorage.setItem('token', authToken);
+                // this.setUser(user);
+
                 // urlWithToken = `${continueUrl}?authToken=${user.getIdToken()}`;
                 // console.log('urlWithToken is', urlWithToken);
    
@@ -157,9 +159,11 @@ export const useAuthStore = defineStore('authstore',{
                 } else {
                     // console.log('User is not null, setting user:', user);
                     this.setUser(user);
-                    const authToken = await user.getIdToken();
-                    localStorage.setItem('token', authToken);
+                    // const authToken = await user.getIdToken();
+                    // localStorage.setItem('token', authToken);
                     if (router.isReady() && router.currentRoute.value.path === '/login') {
+                        const authToken = await user.getIdToken();
+                        localStorage.setItem('token', authToken);
                         router.push('/home')
                     }
                 }
