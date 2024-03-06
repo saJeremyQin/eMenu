@@ -19,6 +19,15 @@ admin.initializeApp({
     databaseURL: "https://emenu-41e86.firebaseio.com"
 });
 
+admin.auth().listUsers()
+  .then((users) => {
+      console.log("Firebase 初始化成功！");
+  })
+  .catch((error) => {
+      console.error("Firebase 初始化失败:", error);
+      // 在这里处理初始化失败的情况
+  });
+  
 const authenticateUser = async (req, res, next) => {
     try {
       const authHeader = req.header('Authorization');

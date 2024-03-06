@@ -11,12 +11,14 @@ import {
 import fetchClient from "@/utils/fetchClient";
 import eventBus from "@/utils/eventBus";
 
-// const continueUrl;
+const continueUrl = "https://emenu-k5k7.onrender.com/home";
+let urlWithToken=null;
 
 
 const actionCodeSettings = {
     // url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
-    url:'https://emenu-k5k7.onrender.com/home',
+    // url:'https://emenu-k5k7.onrender.com/home',
+    url: urlWithToken,
     handleCodeInApp: true,
 };
 
@@ -73,10 +75,12 @@ export const useAuthStore = defineStore('authstore',{
         },
         async register(details) {
             const { email, username, password } = details;
-            console.log(`email is ${email}, password is ${password}, username is ${username}`);
+            // console.log(`email is ${email}, password is ${password}, username is ${username}`);
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
+                urlWithToken = `${continueUrl}?authToken=${user.getIdToken()}`;
+                console.log('urlWithToken is', urlWithToken);
    
                 try {
                     await sendEmailVerification(user, actionCodeSettings);
