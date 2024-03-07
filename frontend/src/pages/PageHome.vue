@@ -15,14 +15,15 @@ const userFireBaseState = ref();
 const userStore = useAuthStore();
 
 onMounted(async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const emailConfirmed = urlParams.get('confirm_email');
+  console.log(emailConfirmed);
+  if(emailConfirmed) {
+    userStore.resetAuthorizationHeader();
+  }
   userFireBaseState.value = auth.currentUser.emailVerified;
   if(auth.currentUser.emailVerified !== userStore.contentfulVerified) {
-    // console.log('emailVerified is ', auth.currentUser.emailVerified);
-    const authToken = userStore.user?.idToken();
-    console.log('authToken in pageLogin is', authToken);
-
-    fetchClient.defaults.headers.common['Authorization']=`Bearer ${authToken}`;
-
+    // can be put in if emailConfirmed?
     await fetchClient.put('/api/users/updateVerified', {
       verified: userFireBaseState.value,
     });

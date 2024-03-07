@@ -15,9 +15,7 @@ const continueUrl = "https://emenu-k5k7.onrender.com/home";
 
 
 const actionCodeSettings = {
-    // url:'https://vigilant-palm-tree-577qwrxjwrgcvjjw-8080.preview.app.github.dev/home',
-    // url:'https://emenu-k5k7.onrender.com/home',
-    url: continueUrl,
+    url:'https://emenu-k5k7.onrender.com/home?confirm_email=true',
     handleCodeInApp: true,
 };
 

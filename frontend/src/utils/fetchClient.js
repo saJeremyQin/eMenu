@@ -15,15 +15,14 @@ const fetchClient = (() => {
     });
 
     instance.interceptors.request.use(async (config) =>{
-        // config.headers.Authorization = await getAuthToken();
-        const authToken = localStorage.getItem('token');
-        if(authToken) {
-            console.log('current headers Author is', config.headers.Authorization);
-            config.headers.Authorization = `Bearer ${authToken}`;
-        }
+        config.headers.Authorization = await getAuthToken();
         return config;
     });
 
+    instance.resetAuthorizationHeader =  async () => {
+        const token = await getAuthToken();
+        instance.defaults.headers.common['Authorization'] = token;
+    }
     return instance;
 })();
 
