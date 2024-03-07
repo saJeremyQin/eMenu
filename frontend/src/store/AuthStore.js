@@ -11,7 +11,7 @@ import {
 import fetchClient from "@/utils/fetchClient";
 import eventBus from "@/utils/eventBus";
 
-const continueUrl = "https://emenu-k5k7.onrender.com/home";
+// const continueUrl = "https://emenu-k5k7.onrender.com/home";
 
 
 const actionCodeSettings = {

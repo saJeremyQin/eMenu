@@ -1,14 +1,14 @@
 import axios from "axios";
-// import auth from "@/firebase";
+import auth from "@/firebase";
 
 const fetchClient = (() => {
-    // const getAuthToken = async () => {
-    //     try {
-    //         return "Bearer " + await auth.currentUser?.getIdToken();
-    //     } catch (error) {
-    //         console.log('getAuthToken ', error);
-    //     }
-    // };
+    const getAuthToken = async () => {
+        try {
+            return "Bearer " + await auth.currentUser?.getIdToken();
+        } catch (error) {
+            console.log('getAuthToken ', error);
+        }
+    };
 
     const instance = axios.create({
         baseURL:'/'
