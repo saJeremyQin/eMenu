@@ -21,6 +21,7 @@ const fetchClient = (() => {
 
     instance.resetAuthorizationHeader =  async () => {
         const token = await getAuthToken();
+        console.log('current Token is ', token);
         instance.defaults.headers.common['Authorization'] = token;
     }
     return instance;

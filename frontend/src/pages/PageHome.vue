@@ -17,7 +17,7 @@ const userStore = useAuthStore();
 onMounted(async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const emailConfirmed = urlParams.get('confirm_email');
-  console.log(emailConfirmed);
+  console.log('this is url parameter of emailConfirmed:'+emailConfirmed);
   if(emailConfirmed) {
     userStore.resetAuthorizationHeader();
   }
