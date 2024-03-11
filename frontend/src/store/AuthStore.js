@@ -15,7 +15,7 @@ import eventBus from "@/utils/eventBus";
 
 
 const actionCodeSettings = {
-    url:'https://emenu-k5k7.onrender.com/home?confirm_email=true&mode=action&oobCode=code',
+    url:'https://emenu-k5k7.onrender.com/home?confirm_email=true&mode=verifyEmail&oobCode=cba321',
     handleCodeInApp: true,
 };
 
