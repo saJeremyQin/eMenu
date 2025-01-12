@@ -3,45 +3,21 @@ import { useState, useEffect } from "react";
 import { Card, Icon } from "react-native-elements";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Button, Image } from '@rneui/themed';
-// import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-// import { useSelector,useDispatch } from "react-redux";
-// import { selectCurrentOrder, selectCurrentTable } from "../redux/slices/ordersSlice";
-// import { addDishToShoppingCart,removeDishFromShoppingCart } from "../redux/slices/ordersSlice";
-// import { CURRENCY, THEME, blankImage,windowHeight,windowWidth } from "../globals/constants";
+import { Dish } from "../Globals/types";
+
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
-// const cardSize = windowWidth > 960 ? 180 : 150;
-const cardSize = 90;
+const cardSize = 180;
 
-export interface Dish  {
-  id: number,
-  name: string,
-  type: string,
-  price: number,
-  description: string,
-  image: string,
-} 
 
 const DishItem:React.FC<Dish> = ({id, name, type, price, description, image}) => {
-//   const {colors} = THEME;
-  const [dishName, setDishName] = useState();
-  const [dishDescription, setDishDescription] = useState(); 
+  const [dishName, setDishName] = useState<string>();
+  const [dishDescription, setDishDescription] = useState<string>(); 
 
-  // const dish = props.dish;
-//   const curOrder = useSelector(selectCurrentOrder);
-//   const curTable = useSelector(selectCurrentTable);
-//   const dispatch = useDispatch();
 
   function TrimText() {
-    // if(dish.name.length >= 15)
-    //   setDishName(`${dish.name.slice(0,15)}...`);
-    // else
-    //   setDishName(dish.name);
-    
-    // if(dish.description.length >=15)
-    //   setDishDescription(`${dish.description.slice(0,15)}...`);
-    // else
-    //   setDishDescription(dish.description);
+    if (name.length > 15) setDishName(`${name.slice(0, 15)}...`);
+    if (description.length > 15) setDishDescription(`${description.slice(0, 15)}...`);
   }
 
   useEffect(()=>{
@@ -50,10 +26,7 @@ const DishItem:React.FC<Dish> = ({id, name, type, price, description, image}) =>
 
 
   const addDishToChart = () => {
-    // dispatch(addDishToShoppingCart({
-    //   dishId: dish.id,
-    //   currentTable: curTable
-    // }));
+ 
   };
   
   
@@ -61,7 +34,6 @@ const DishItem:React.FC<Dish> = ({id, name, type, price, description, image}) =>
       <View style={styles.container}>
         <Pressable
           onPress={() => addDishToChart()}
-          // activeOpacity={0.7}
           style={[
             styles.bottom_container,
             { backgroundColor: "#ccc" },
@@ -132,5 +104,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DishItem;
+export default React.memo(DishItem);
 

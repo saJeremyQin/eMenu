@@ -2,11 +2,11 @@ import { GET_DISHES } from "../Globals/query";
 import React from "react";
 import { View, Text, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import { useQuery } from "@apollo/client";
-import DishItem, {Dish}  from "./dishItem";
-
+import DishItem from "./dishItem";
+import { Dish } from "../Globals/types";
 
 const DishesList = () => {
-  const { loading, error, data } = useQuery(GET_DISHES);
+  const { loading, error, data } = useQuery<{dishes: Dish[]}>(GET_DISHES);
 
   if (loading) {
       return <ActivityIndicator size="large" color="#0000ff" />;
@@ -16,8 +16,12 @@ const DishesList = () => {
       return <Text>Error: {error.message}</Text>;
   }
 
+  if (!data || !data.dishes) {
+    return <Text>No dishes found.</Text>;
+  }
+
   const renderDishItem = ({ item }:{item: Dish}) => {
-    return (<DishItem id={item.id} name={item.name} type={item.type} price={item.price} description={item.description} image={item.image}/>)
+    return (<DishItem {...item} />);
   }
   
   return (
